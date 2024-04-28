@@ -1,0 +1,5 @@
+- hosts: rancher
+  roles:
+    - common
+    - docker
+    - rancher
