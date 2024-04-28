@@ -1,0 +1,28 @@
+- name: Install sudo package
+  ansible.builtin.apt:
+    name: sudo
+    update_cache: false
+
+- name: Create Ansible pvenode_user
+  ansible.builtin.user:
+    name: "{{ pvenode_user }}"
+    shell: '/bin/bash'
+
+- name: Add Ansible ssh key
+  ansible.builtin.authorized_key:
+    user: "{{ pvenode_user }}"
+    key: "{{ lookup('file', '/home/{{ pvenode_user }}/.ssh/id_rsa.pub') }}" 
+
+- name: Add {{ pvenode_user }} to sudo
+  ansible.builtin.user:
+    name: "{{ pvenode_user }}"
+    groups: sudo
+    append: true
+    state: present
+    createhome: true
+
+- name: Make sudo without password for {{ pvenode_user }}
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/80-ansible-sudo-user
+    content: "{{ pvenode_user }} ALL=(ALL) NOPASSWD:ALL"
+    mode: 0440

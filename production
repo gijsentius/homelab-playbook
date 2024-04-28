@@ -1,3 +1,9 @@
+[pvenodes]
+192.168.178.69
+
+[proxmox]
+localhost
+
 [rancher]
 192.168.2.166
 192.168.2.167

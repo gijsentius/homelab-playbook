@@ -1,0 +1,11 @@
+- name: Create a full clone of the container with id {{ proxmox.id  }}
+  community.general.proxmox:
+    vmid: "{{ proxmox_vmid }}"
+    clone: "{{ promox_clone_id }}"
+    storage: "{{ proxmox_storage }}"
+    hostname: "{{ proxmox_hostname }}"
+    node: "{{ proxmox.api.node }}"
+    api_user: "{{ proxmox.api.user }}"
+    api_password: "{{ proxmox.api.password}}"
+    api_host: "{{ proxmox.api.host }}"
+    state: present

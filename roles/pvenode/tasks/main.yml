@@ -1,0 +1,9 @@
+- name: Run pvenode setup
+  import_tasks: setup.yml
+  become: true
+  become_user: root
+
+- name: Install ansible requirements
+  import_tasks: ansible.yml
+  become: true
+  become_user: root
