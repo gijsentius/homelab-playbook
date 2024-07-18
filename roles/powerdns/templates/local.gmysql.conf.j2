@@ -1,0 +1,8 @@
+launch+=gmysql
+
+gmysql-host={{ powerdns.db.host | default('127.0.0.1') }}
+gmysql-port={{ powerdns.db.port | default('3306') }}
+gmysql-dbname={{ powerdns.db.name }}
+gmysql-user={{ powerdns.db.user.name }}
+gmysql-password={{ powerdns.db.user.password }}
+gmysql-dnssec={{ powerdns.db.dnssec | default('yes')}}

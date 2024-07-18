@@ -1,9 +1,25 @@
 - name: Run pvenode setup
-  import_tasks: setup.yml
+  ansible.builtin.import_tasks: setup.yml
   become: true
   become_user: root
 
-- name: Install ansible requirements
-  import_tasks: ansible.yml
-  become: true
-  become_user: root
+# Update template removes a template when it has a newer image available
+- ansible.builtin.include_tasks: update_template.yml
+  args:
+    apply:
+      become: true
+      become_user: root  
+  loop: "{{ pvenode.templates }}" 
+  loop_control:
+    loop_var: template
+
+- ansible.builtin.include_tasks: create_template.yml
+  args:
+    apply:
+      become: true
+      become_user: root  
+  loop: "{{ pvenode.templates }}" 
+  loop_control:
+    loop_var: template
+
+

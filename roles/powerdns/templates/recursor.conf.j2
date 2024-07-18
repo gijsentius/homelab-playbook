@@ -1,0 +1,47 @@
+#################################
+# config-dir	Location of configuration directory (recursor.conf)
+#
+config-dir=/etc/powerdns
+
+#################################
+# dnssec	DNSSEC mode: off/process-no-validate/process (default)/log-fail/validate
+#
+dnssec=off
+
+#################################
+# hint-file	If set, load root hints from this file
+#
+# hint-file=
+hint-file=/usr/share/dns/root.hints
+
+#################################
+# include-dir	Include *.conf files from this directory
+#
+# include-dir=
+include-dir=/etc/powerdns/recursor.d
+
+#################################
+# local-address	IP addresses to listen on, separated by spaces or commas. Also accepts ports.
+#
+local-address=127.0.0.1
+
+#################################
+# lua-config-file	More powerful configuration options
+#
+lua-config-file=/etc/powerdns/recursor.lua
+
+#################################
+# public-suffix-list-file	Path to the Public Suffix List file, if any
+#
+public-suffix-list-file=/usr/share/publicsuffix/public_suffix_list.dat
+
+#################################
+# quiet	Suppress logging of questions and answers
+#
+quiet=yes
+
+#################################
+# security-poll-suffix	Domain name from which to query security update notifications
+#
+# security-poll-suffix=secpoll.powerdns.com.
+security-poll-suffix=

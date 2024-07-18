@@ -1,0 +1,51 @@
+- name: Try to update a template image
+  block:
+    - name: Register template image 
+      ansible.builtin.stat:
+        path: "~/{{ template.name }}.qcow2"
+        checksum_algorithm: sha256
+      register: image
+
+    - name: Register default checksum if template image not exists
+      ansible.builtin.set_fact:
+        template_image_checksum: "{{ image.stat.checksum | default('') }}"
+
+    - name: Download newest image checksums
+      ansible.builtin.get_url:
+        url: "{{ template.checksums }}"
+        dest: "/tmp/checksums.txt"
+
+    - name: Slurp checksum file
+      ansible.builtin.slurp:
+        src: /tmp/checksums.txt
+      register: template_checksums
+
+    - name: Get checksum file content
+      ansible.builtin.set_fact:
+        template_checksum_file: "{{ template_checksums['content'] | b64decode }}"
+
+    - name: Get image name from url
+      ansible.builtin.set_fact:
+        template_image_name: "{{ template.image_url | image_name_from_url }}"
+
+    - name: Get image checksum
+      ansible.builtin.set_fact:
+        template_image_checksum: "{{ template_checksum_file | image_hash_from_url(template_image_name) }}"
+
+    - name: Remove old template image
+      ansible.builtin.file:
+        path: "~/{{ template.name }}.qcow2" 
+        state: absent 
+      when: template_image_checksum != template_image_checksum 
+
+    - name: Remove old template
+      community.general.proxmox_kvm:
+        name: "{{ template.name }}"
+        node: "{{ proxmox.api.node }}"
+        api_user: "{{ proxmox.api.user }}"
+        api_token_id: "{{ proxmox.api.token.id }}"
+        api_token_secret: "{{ proxmox.api.token.secret }}"
+        api_host: "{{ proxmox.api.host }}"
+        state: absent
+      when: template_image_checksum != template_image_checksum 
+  when: template.checksums is defined

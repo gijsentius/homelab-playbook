@@ -1,7 +1,0 @@
-proxmox:
-  api:
-    node: pve
-    host: 192.168.178.69 
-    user: gijs@pam
-    key: ansible
-    secret: "{{ vault.api.secret }}"

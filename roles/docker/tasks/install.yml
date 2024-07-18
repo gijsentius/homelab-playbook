@@ -1,0 +1,47 @@
+- name: Update apt packages
+  ansible.builtin.apt:
+     cache_valid_time: 3600
+     update_cache: true
+
+- name: Search apt cache for major docker version
+  ansible.builtin.shell:
+    cmd: apt-cache madison docker-ce | awk '{ print $3 }' | grep {{ docker.version|quote }} | head -n 1
+  register: docker_version_output
+  when: docker is defined
+
+- name: Set docker version variable
+  ansible.builtin.set_fact:
+    docker_version: "{{ docker_version_output.stdout }}"
+  when: docker is defined
+
+- name: Install major docker version
+  ansible.builtin.apt:
+    pkg:
+      - "docker-ce={{ docker_version }}"
+      - "docker-ce-cli={{ docker_version }}"
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin 
+    allow_downgrade: true
+  when: docker is defined
+
+- name: Install docker
+  ansible.builtin.apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+  when: docker is undefined 
+
+- name: Ensure group "docker" exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Adding {{ lookup('env', 'USER') }} to docker group
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: docker
+    append: yes

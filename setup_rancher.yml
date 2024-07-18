@@ -1,0 +1,11 @@
+- hosts: rancher
+  gather_facts: false 
+  roles:
+    - role: proxmox
+      delegate_to: localhost
+
+- hosts: rancher
+  roles:
+    - common
+    - docker
+    - rancher

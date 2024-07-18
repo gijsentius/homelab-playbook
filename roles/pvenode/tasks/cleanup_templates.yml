@@ -1,0 +1,11 @@
+- name: Find all templates on node
+  community.general.proxmox_vm_info:
+    type: qemu
+    node: "{{ proxmox.api.node }}"
+    api_user: "{{ proxmox.api.user }}"
+    api_token_id: "{{ proxmox.api.token.id }}"
+    api_token_secret: "{{ proxmox.api.token.secret }}"
+    api_host: "{{ proxmox.api.host }}"
+  register: template_info
+
+# TODO clean templates not defined

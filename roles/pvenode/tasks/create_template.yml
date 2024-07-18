@@ -1,0 +1,94 @@
+- name: Try to create a template in proxmox
+  block:
+    - name: Register template image 
+      ansible.builtin.stat:
+        path: "~/{{ template.name }}.qcow2"
+        checksum_algorithm: sha256
+      register: image
+
+    - name: Register existing template check
+      community.general.proxmox_vm_info:
+        name: "{{ template.name }}"
+        node: "{{ proxmox.api.node }}"
+        api_user: "{{ proxmox.api.user }}"
+        api_token_id: "{{ proxmox.api.token.id }}"
+        api_token_secret: "{{ proxmox.api.token.secret }}"
+        api_host: "{{ proxmox.api.host }}"
+      register: template_info
+
+    - name: Download cloud image & rename to qcow2
+      ansible.builtin.get_url:
+        url: "{{ template.image_url }}" 
+        dest: "~/{{ template.name }}.qcow2"
+        checksum: "{{ template.checksum | default(omit) }}" 
+      when: not (template_info.proxmox_vms | length)
+
+    - name: Install guest agent utils
+      ansible.builtin.command: >
+        virt-customize -a "~/{{ template.name }}.qcow2" --install qemu-guest-agent
+      when: not image.stat.exists
+
+    - name: Empty machine id
+      ansible.builtin.command: >
+        virt-customize -a "~/{{ template.name }}.qcow2" --truncate /etc/machine-id 
+      when: not image.stat.exists
+
+    - name: Increase disk image size
+      ansible.builtin.command: >
+        qemu-img resize "~/{{ template.name }}.qcow2" 20G
+
+    - name: Create an empty VM
+      ansible.builtin.command: >
+        qm create {{ template.id }} 
+          --name {{ template.name }} 
+          --memory {{ template.memory | default(1024) }} 
+          --net0 virtio,bridge={{ template.bridge | default('vmbr1') }}
+      when: not (template_info.proxmox_vms | length)
+
+    - name: Import the disk image in the local Proxmox storage
+      ansible.builtin.command: >
+          qm importdisk {{ template.id }} ~/{{ template.name }}.qcow2 local-lvm
+      when: not (template_info.proxmox_vms | length)
+
+    - name: Configure VM to use the uploaded image
+      ansible.builtin.command: >
+          qm set {{ template.id }}
+            --scsihw virtio-scsi-pci 
+            --scsi0 local-lvm:vm-{{ template.id }}-disk-0
+      when: not (template_info.proxmox_vms | length)
+
+    - name: Adding the image as CD-Rom to VM
+      ansible.builtin.command: >
+          qm set {{ template.id }} --ide2 local-lvm:cloudinit
+      when: not (template_info.proxmox_vms | length)
+
+    - name: Force VM to boot from image
+      ansible.builtin.command: >
+          qm set {{ template.id }} --boot c --bootdisk scsi0
+      when: not (template_info.proxmox_vms | length)
+
+    - name: Attach serial console
+      ansible.builtin.command: >
+          qm set {{ template.id }} --serial0 socket --vga serial0
+      when: not (template_info.proxmox_vms | length)
+
+    - name: Create template
+      community.general.proxmox_kvm:
+        name: "{{ template.name }}"
+        node: "{{ proxmox.api.node }}"
+        api_user: "{{ proxmox.api.user }}"
+        api_token_id: "{{ proxmox.api.token.id }}"
+        api_token_secret: "{{ proxmox.api.token.secret }}"
+        api_host: "{{ proxmox.api.host }}"
+        state: template 
+      when: not (template_info.proxmox_vms | length)
+  rescue:
+    - name: Remove unfinished template
+      community.general.proxmox_kvm:
+        name: "{{ template.name }}"
+        node: "{{ proxmox.api.node }}"
+        api_user: "{{ proxmox.api.user }}"
+        api_token_id: "{{ proxmox.api.token.id }}"
+        api_token_secret: "{{ proxmox.api.token.secret }}"
+        api_host: "{{ proxmox.api.host }}"
+        state: absent

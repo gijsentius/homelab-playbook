@@ -1,3 +1,11 @@
 - import_tasks: debian.yml
   become: true
+  when: ansible_facts['lsb']['id']|lower == 'debian'
+
+- import_tasks: ubuntu.yml
+  become: true
+  when: ansible_facts['lsb']['id']|lower == 'ubuntu'
+
+- import_tasks: install.yml
+  become: true
   when: ansible_facts['os_family']|lower == 'debian'

@@ -1,0 +1,2 @@
+clone: ubuntu-2204-template 
+hostname: rancher-ctrl-1.gijsentius.lan

@@ -1,0 +1,12 @@
+
+- hosts: powerdns 
+  gather_facts: false
+  roles:
+    - role: proxmox
+      delegate_to: localhost
+
+- hosts: powerdns
+  gather_facts: true
+  roles:
+    - role: docker
+    - role: powerdns
