@@ -127,13 +127,13 @@
         state: restarted
         name: pdns
 
-    - name: Start pdns admin interface with docker
-      community.docker.docker_container:
-        name: pdns-admin
-        image: powerdnsadmin/pda-legacy:latest
-        volumes:
-          - pda-data:/data
-        env:
-          SECRET_KEY: "{{ powerdns.api.key }}"
-        ports:
-          - "9191:80"
+          #- name: Start pdns admin interface with docker
+          #community.docker.docker_container:
+          #name: pdns-admin
+          #image: powerdnsadmin/pda-legacy:latest
+          #volumes:
+          #- pda-data:/data
+          #env:
+          #SECRET_KEY: "{{ powerdns.api.key }}"
+          #ports:
+          #- "9191:80"
