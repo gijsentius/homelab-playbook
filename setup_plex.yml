@@ -1,0 +1,11 @@
+- hosts: plex 
+  gather_facts: false
+  roles:
+    - role: plex
+      delegate_to: localhost
+
+- hosts: plex
+  gather_facts: true
+  roles:
+    - role: docker
+    - role: plex

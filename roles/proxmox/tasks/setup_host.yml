@@ -12,7 +12,7 @@
         nameservers: "{{ host.nameservers | default(omit) }}"
         searchdomains: "{{ host.searchdomains | default(omit) }}"
         timeout: "{{ host.timeout | default(300) }}"
-        node: "{{ proxmox.api.node }}"
+        node: "{{ host.node }}"
         full: true
         api_user: "{{ proxmox.api.user }}"
         api_token_id: "{{ proxmox.api.token.id }}"
@@ -25,7 +25,7 @@
       community.general.proxmox_kvm:
         name: "{{ host.name }}"
         timeout: "{{ proxmox.api.timeout | default(300) }}"
-        node: "{{ proxmox.api.node }}"
+        node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"
@@ -44,7 +44,7 @@
       community.general.proxmox_kvm:
         name: "{{ host.name }}"
         timeout: "{{ proxmox.api.timeout | default(300) }}"
-        node: "{{ proxmox.api.node }}"
+        node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"
@@ -56,7 +56,7 @@
     - name: Retrieve info about VM in proxmox
       community.general.proxmox_vm_info:
         name: "{{ host.name }}"
-        node: "{{ proxmox.api.node }}"
+        node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"
@@ -82,7 +82,7 @@
     - name: Remove VM from proxmox
       community.general.proxmox_kvm:
         name: "{{ host.name }}"
-        node: "{{ proxmox.api.node }}"
+        node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"

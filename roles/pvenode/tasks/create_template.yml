@@ -9,7 +9,7 @@
     - name: Register existing template check
       community.general.proxmox_vm_info:
         name: "{{ template.name }}"
-        node: "{{ proxmox.api.node }}"
+        node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"
@@ -75,7 +75,7 @@
     - name: Create template
       community.general.proxmox_kvm:
         name: "{{ template.name }}"
-        node: "{{ proxmox.api.node }}"
+        node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"
@@ -86,7 +86,7 @@
     - name: Remove unfinished template
       community.general.proxmox_kvm:
         name: "{{ template.name }}"
-        node: "{{ proxmox.api.node }}"
+        node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"

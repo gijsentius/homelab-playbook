@@ -1,15 +1,18 @@
 [pvenodes]
 192.168.178.69
+192.168.178.70
+192.168.178.71
 
 [proxmox]
 localhost
 
 [rancher]
 rancher-ctrl-1
+rancher-ctrl-2
+rancher-ctrl-3
 rancher-worker-1
 rancher-worker-2
 rancher-worker-3
 
 [powerdns]
-192.168.2.20
-192.168.3.20
+192.168.178.53

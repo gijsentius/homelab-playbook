@@ -1,0 +1,14 @@
+[pvenodes]
+dc.gijsentius.com
+
+[powerdns]
+192.168.178.53
+
+[plex]
+plex.gijsentius.com
+
+[sabnzb]
+sabnzb.gijsentius.com
+
+[filestore]
+filestore.gijsentius.com
