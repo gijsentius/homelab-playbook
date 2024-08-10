@@ -1,0 +1,17 @@
+# When executing on powerdns use pdnsutil
+- name: "Add record {{ host.zone}}"
+  ansible.builtin.command: >
+    pdnsutil add-record {{ host.zone }} {{ host.name }} A {{ host.ipv4 }}
+  when: dns in group_names
+
+# Otherwise use api from dns server
+- name: Create dns record
+  ansible.builtin.uri:
+    url: "http://{{ item }}:{{ dns.port | default(8081) }}/servers/localhost/zones"
+    method: POST
+    body: "{{ lookup('ansible.builtin.template','record.json.j2') }}"
+    body_format: json
+    headers:
+      X-API-Key: "{{ dns.api_key }}"
+  when: dns not in group_names
+  loop: "{{ host.nameservers }}"

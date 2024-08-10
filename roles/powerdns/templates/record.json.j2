@@ -1,0 +1,8 @@
+{
+    "name": "{{ host.name }}", 
+    "kind": "Master",
+    "dnssec":false,
+    "soa-edit":"INCEPTION-INCREMENT",
+    "masters": [], 
+    "nameservers": ["{{ host.name }}.{{ host.zone }}."]
+}

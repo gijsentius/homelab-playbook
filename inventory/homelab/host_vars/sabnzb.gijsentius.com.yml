@@ -1,12 +1,15 @@
 host:
   vm_id: 702
-  name: sabnzb.gijsentius.com  
+  name: sabnzb
+  zone: gijs.entius.com
   gateway: 192.168.178.1
   ipv4: 192.168.178.221
+  nameservers: 192.168.178.53
   subnet: 24
   subnet_cidr: '192.168.178.0/24'
   sshkeys: >
     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQD5bc5oSjRihFmILKnAunrBwlDAbcCc3g7mATQaCJ5jI+eLvkZxLJHUsIF+xfKGZDfQBKNoyOSORFwXxXd+tTPnd0tgmluwrRivr1eqVMRnpryZ9pdG8KXQKVmMrwB1R2QTHsuP4ORu/p2nzhedkkXizoB2s+vlJCAUG0AlHz/W0yUXpe8NehC884YlQTUtFX4ndwEto6jyP4E+0u6K24dRL7cKE6qjyC+Is11cYOF7OVuVsW7qjs+XurDDTO07hRW8YKvSdRlGXlfiwKFGorbLgJAGtVhtJAnzM3Ct3J89SchsU+rG0ktpBghMbfHrJRiVAQddGVIRwRrGUGC1fC03d2foxVV40DVhV4CxKL1kcn4TSUYdEHYXWqThsCb91t6iqJz+eQuSOwEB+TTp+pXOvZTZ41mlewzXE9k6ydC2dRODDRA6H1ppEWro6BvHAMmT66cr6vy00Ny2cqnos2tNSjl4YM+cE9JnXvImUQmWS+YNM6uGPluNSPPrXWFYakc= gijs@gijs-Standard-PC-Q35-ICH9-2009 
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPFEzpT1ChTKTFb7mhVOfkEnNREX2Z/oOMuSpxU+QGz g.m.entius@gmail.com
   user: gijs
   password: !vault |
       $ANSIBLE_VAULT;1.1;AES256

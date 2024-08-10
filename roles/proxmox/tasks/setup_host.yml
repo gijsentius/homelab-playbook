@@ -51,7 +51,10 @@
         api_host: "{{ proxmox.api.host }}"
         state: started
 
-   #- name: Register hostname at DNS server
+    - name: Register hostname at DNS server
+      include_role:
+        name: powerdns
+        tasks_from: create_record
 
     - name: Retrieve info about VM in proxmox
       community.general.proxmox_vm_info:

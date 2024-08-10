@@ -1,0 +1,2 @@
+# Setup watchtower container to update docker containers
+# Don't forget to remove old container images

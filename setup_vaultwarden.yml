@@ -1,0 +1,31 @@
+- name: Setup VM in proxmox for vaultwarden
+  hosts: vault 
+  gather_facts: false
+  tasks:
+    - name: Create VM with Proxmox API
+      include_role:
+        name: proxmox
+        tasks_from: setup_host
+        apply:
+          delegate_to: localhost
+
+- name: Start vaultwarden on VM inside docker container
+  hosts: vault
+  gather_facts: true
+  tasks:
+    - name: Setup docker on newly created VM
+      include_role:
+        name: docker
+
+    - name: Start vaultwarden in Docker container
+      community.docker.docker_container:
+        name: vaultwarden
+        image: vaultwarden/server:latest
+        volumes:
+          - /vw-data/:/data/
+        ports:
+          - "80:80"
+        restart_policy: "unless-stopped"
+        state: present
+
+

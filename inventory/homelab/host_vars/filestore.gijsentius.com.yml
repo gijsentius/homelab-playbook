@@ -1,8 +1,10 @@
 host:
   vm_id: 700
-  name: filestore.gijsentius.com  
+  name: filestore
+  zone: gijs.entius.com
   gateway: 192.168.178.1
   ipv4: 192.168.178.111
+  nameservers: 192.168.178.53
   subnet: 24
   subnet_cidr: '192.168.178.0/24'
   sshkeys: >
