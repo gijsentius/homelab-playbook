@@ -10,9 +10,9 @@
       community.general.proxmox_vm_info:
         name: "{{ template.name }}"
         node: "{{ host.node }}"
-        api_user: "{{ proxmox.api.user }}"
-        api_token_id: "{{ proxmox.api.token.id }}"
-        api_token_secret: "{{ proxmox.api.token.secret }}"
+        api_user: "{{ pvenode.user }}"
+        api_token_id: "{{ proxmox.api.token.id | default('ansible') }}"
+        api_token_secret: "{{ proxmox.api.token.secret | default(pve_created_token) }}"
         api_host: "{{ proxmox.api.host }}"
       register: template_info
 
@@ -76,9 +76,9 @@
       community.general.proxmox_kvm:
         name: "{{ template.name }}"
         node: "{{ host.node }}"
-        api_user: "{{ proxmox.api.user }}"
-        api_token_id: "{{ proxmox.api.token.id }}"
-        api_token_secret: "{{ proxmox.api.token.secret }}"
+        api_user: "{{ pvenode.user }}"
+        api_token_id: "{{ proxmox.api.token.id | default('ansible') }}"
+        api_token_secret: "{{ proxmox.api.token.secret | default(pve_created_token) }}"
         api_host: "{{ proxmox.api.host }}"
         state: template 
       when: not (template_info.proxmox_vms | length)
@@ -87,8 +87,8 @@
       community.general.proxmox_kvm:
         name: "{{ template.name }}"
         node: "{{ host.node }}"
-        api_user: "{{ proxmox.api.user }}"
-        api_token_id: "{{ proxmox.api.token.id }}"
-        api_token_secret: "{{ proxmox.api.token.secret }}"
+        api_user: "{{ pvenode.user }}"
+        api_token_id: "{{ proxmox.api.token.id | default('ansible') }}"
+        api_token_secret: "{{ proxmox.api.token.secret | default(pve_created_token) }}"
         api_host: "{{ proxmox.api.host }}"
         state: absent
