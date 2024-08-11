@@ -20,3 +20,10 @@ Then you can install mysqlclient via pip.
 ```bash
 $ pip install mysqlclient
 ```
+
+## Prepare pve nodes
+
+- Run setup_pvenodes playbook: ansible-playbook -J -K -i inventory/homelab setup_pvenodes.yml
+- Create API key with correct rights for ansible pam user
+- Create Permission for created API key
+- 
