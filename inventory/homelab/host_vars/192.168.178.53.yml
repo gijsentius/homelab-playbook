@@ -1,8 +1,10 @@
 host:
   vm_id: 600
-  name: dns.gijsentius.com  
+  name: dns
+  zone: gijsentius.com
   gateway: 192.168.178.1
   ipv4: 192.168.178.53
+  node: pve
   subnet: 24
   subnet_cidr: '192.168.178.0/24'
   sshkeys: >

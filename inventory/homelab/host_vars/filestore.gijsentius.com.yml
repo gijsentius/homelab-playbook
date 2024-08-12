@@ -1,7 +1,7 @@
 host:
   vm_id: 700
   name: filestore
-  zone: gijs.entius.com
+  zone: gijsentius.com
   gateway: 192.168.178.1
   ipv4: 192.168.178.111
   nameservers: 192.168.178.53
