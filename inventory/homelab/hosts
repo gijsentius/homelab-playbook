@@ -1,7 +1,7 @@
 [pvenodes]
 dc.gijsentius.com
 
-[dns]
+[powerdns]
 192.168.178.53
 
 [plex]
