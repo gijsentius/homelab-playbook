@@ -10,7 +10,7 @@
       community.general.proxmox_vm_info:
         name: "{{ template.name }}"
         node: "{{ host.node }}"
-        api_user: "{{ pvenode.user }}"
+        api_user: "{{ proxmox.api.user }}"
         api_token_id: "{{ proxmox.api.token.id | default('ansible') }}"
         api_token_secret: "{{ proxmox.api.token.secret | default(pve_created_token) }}"
         api_host: "{{ proxmox.api.host }}"
@@ -42,7 +42,7 @@
         qm create {{ template.id }} 
           --name {{ template.name }} 
           --memory {{ template.memory | default(1024) }} 
-          --net0 virtio,bridge={{ template.bridge | default('vmbr1') }}
+          --net0 virtio,bridge={{ template.bridge | default('vmbr0') }}
       when: not (template_info.proxmox_vms | length)
 
     - name: Import the disk image in the local Proxmox storage

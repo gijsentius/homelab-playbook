@@ -8,18 +8,31 @@
         newid: "{{ host.vm_id | default(omit) }}"
         memory: "{{ host.memory | default('4096') }}"
         cores: "{{ host.cores | default('2') }}"
-        storage: "{{ host.storage | default('local-lvm') }}"
+        storage: "{{ host.storage | default(omit) }}"
         nameservers: "{{ host.nameservers | default(omit) }}"
         searchdomains: "{{ host.searchdomains | default(omit) }}"
         timeout: "{{ host.timeout | default(300) }}"
         node: "{{ host.node }}"
-        full: true
+        full: "{{ host.full_clone | default(false) }}"
         api_user: "{{ proxmox.api.user }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"
         api_host: "{{ proxmox.api.host }}"
         state: present
       register: created_vm
+
+    - name: Update hardwarde parameters
+      community.general.proxmox_kvm:
+        name: "{{ host.name }}"
+        timeout: "{{ proxmox.api.timeout | default(300) }}"
+        node: "{{ host.node }}"
+        api_user: "{{ proxmox.api.user }}"
+        api_token_id: "{{ proxmox.api.token.id }}"
+        api_token_secret: "{{ proxmox.api.token.secret }}"
+        api_host: "{{ proxmox.api.host }}"
+        memory: "{{ host.memory | default('4096') }}"
+        cores: "{{ host.cores | default('2') }}"
+        update: true
 
     - name: Configure cloud init parameters
       community.general.proxmox_kvm:
@@ -35,7 +48,7 @@
         cipassword: "{{ host.password }}"
         sshkeys: "{{ host.sshkeys | default(omit) }}"
         net:
-          net0: "virtio,bridge={{ host.bridge | default('vmbr1') }},tag=77" 
+          net0: "virtio,bridge={{ host.bridge | default('vmbr0') }},tag=77" 
         ipconfig:
           ipconfig0: "ip={{ host.ipv4 }}/{{ host.subnet }},gw={{ host.gateway }}" 
         update: true
@@ -67,20 +80,23 @@
         api_host: "{{ proxmox.api.host }}"
       register: proxmox_vm_info
 
-    - name: Wait for ssh to become available
-      ansible.builtin.wait_for:
-        port: 22
-        host: "{{ host.ipv4 }}"
-    
-    - name: Write the new VM instance host key to known hosts
-      connection: local
-      ansible.builtin.shell: "ssh-keyscan -H {{ host.ipv4 }} >> ~/.ssh/known_hosts"
-      when: created_vm.changed
-  
     - name: Wait for the machine to come online
       ansible.builtin.wait_for_connection:
         delay: 30
         timeout: 600
+      when: created_vm.changed
+
+    - name: Wait for ssh to become available
+      ansible.builtin.wait_for:
+        port: 22
+        sleep: 10
+        delay: 30
+        host: "{{ host.ipv4 }}"
+      when: created_vm.changed
+    
+    - name: Write the new VM instance host key to known hosts
+      connection: local
+      ansible.builtin.shell: "ssh-keyscan -H {{ host.ipv4 }} >> ~/.ssh/known_hosts"
       when: created_vm.changed
   rescue:
     - name: Remove VM from proxmox
