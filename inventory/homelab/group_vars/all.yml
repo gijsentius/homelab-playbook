@@ -1,8 +1,9 @@
 proxmox:
   api:
-    node: pve
     host: 192.168.178.69
-    user: gijs@pam
+    user: 
+      name: gijs
+      full_name: gijs@pam
     password: !vault |
         $ANSIBLE_VAULT;1.1;AES256
         39336434626363663631656237656136363531666234646137633265373337333236343232376331

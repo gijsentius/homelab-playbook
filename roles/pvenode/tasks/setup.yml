@@ -7,28 +7,28 @@
       - jq
     update_cache: false
 
-- name: Create user {{ pvenode.user }}
+- name: Create user {{ proxmox.api.user.name }}
   ansible.builtin.user:
-    name: "{{ pvenode.user }}"
+    name: "{{ proxmox.api.user.name }}"
     shell: '/bin/bash'
 
 - name: Add Ansible ssh key
   ansible.builtin.authorized_key:
-    user: "{{ pvenode.user }}"
-    key: "{{ lookup('file', '/home/{{ pvenode.user }}/.ssh/id_rsa.pub') }}" 
+    user: "{{ proxmox.api.user.name }}"
+    key: "{{ lookup('file', '/home/{{ proxmox.api.user.name }}/.ssh/id_rsa.pub') }}" 
 
-- name: Add {{ pvenode.user }} to sudo
+- name: Add {{ proxmox.api.user.name }} to sudo
   ansible.builtin.user:
-    name: "{{ pvenode.user }}"
+    name: "{{ proxmox.api.user.name }}"
     groups: sudo
     append: true
     state: present
     createhome: true
 
-- name: Make sudo without password for {{ pvenode.user }}
+- name: Make sudo without password for {{ proxmox.api.user.name }}
   ansible.builtin.copy:
     dest: /etc/sudoers.d/80-ansible-sudo-user
-    content: "{{ pvenode.user }} ALL=(ALL) NOPASSWD:ALL"
+    content: "{{ proxmox.api.user.name }} ALL=(ALL) NOPASSWD:ALL"
     mode: 0440
 
 - name: Retrieve registered users in Proxmox API
@@ -44,7 +44,7 @@
 - name: Register existing users
   ansible.builtin.set_fact:
     pve_existing_users: "{{ pve_user_output.stdout | from_json | map(attribute='name') }}"
-    pve_desired_user: "{{ pvenode.user }}@pam"
+    pve_desired_user: "{{ proxmox.api.user.name }}@pam"
 
 - name: Add user to Proxmox API
   ansible.builtin.command: >

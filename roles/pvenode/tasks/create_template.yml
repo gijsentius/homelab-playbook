@@ -10,7 +10,7 @@
       community.general.proxmox_vm_info:
         name: "{{ template.name }}"
         node: "{{ host.node }}"
-        api_user: "{{ proxmox.api.user }}"
+        api_user: "{{ proxmox.api.user.full_name }}"
         api_token_id: "{{ proxmox.api.token.id | default('ansible') }}"
         api_token_secret: "{{ proxmox.api.token.secret | default(pve_created_token) }}"
         api_host: "{{ proxmox.api.host }}"
@@ -72,22 +72,21 @@
           qm set {{ template.id }} --serial0 socket --vga serial0
       when: not (template_info.proxmox_vms | length)
 
-    - name: Create template
+    - name: "Create template {{ template.name }}"
       community.general.proxmox_kvm:
         name: "{{ template.name }}"
         node: "{{ host.node }}"
-        api_user: "{{ pvenode.user }}"
-        api_token_id: "{{ proxmox.api.token.id | default('ansible') }}"
+        api_user: "{{ proxmox.api.user.full_name }}"
+        api_token_id: "{{ proxmox.api.token.id | default(ansible) }}"
         api_token_secret: "{{ proxmox.api.token.secret | default(pve_created_token) }}"
         api_host: "{{ proxmox.api.host }}"
-        state: template 
-      when: not (template_info.proxmox_vms | length)
+        state: template
   rescue:
     - name: Remove unfinished template
       community.general.proxmox_kvm:
         name: "{{ template.name }}"
         node: "{{ host.node }}"
-        api_user: "{{ pvenode.user }}"
+        api_user: "{{ proxmox.api.user.name }}"
         api_token_id: "{{ proxmox.api.token.id | default('ansible') }}"
         api_token_secret: "{{ proxmox.api.token.secret | default(pve_created_token) }}"
         api_host: "{{ proxmox.api.host }}"
