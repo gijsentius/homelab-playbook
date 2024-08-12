@@ -55,6 +55,7 @@
       include_role:
         name: powerdns
         tasks_from: create_record
+      when: host.nameservers is defined
 
     - name: Retrieve info about VM in proxmox
       community.general.proxmox_vm_info:
