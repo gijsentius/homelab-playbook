@@ -8,7 +8,7 @@
         newid: "{{ host.vm_id | default(omit) }}"
         memory: "{{ host.memory | default('4096') }}"
         cores: "{{ host.cores | default('2') }}"
-        storage: "{{ host.storage | default('hdd1') }}"
+        storage: "{{ host.storage | default('local-lvm') }}"
         nameservers: "{{ host.nameservers | default(omit) }}"
         searchdomains: "{{ host.searchdomains | default(omit) }}"
         timeout: "{{ host.timeout | default(300) }}"
