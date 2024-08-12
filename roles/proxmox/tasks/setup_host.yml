@@ -33,6 +33,7 @@
         memory: "{{ host.memory | default('4096') }}"
         cores: "{{ host.cores | default('2') }}"
         update: true
+      ignore_errors: true
 
     - name: Configure cloud init parameters
       community.general.proxmox_kvm:

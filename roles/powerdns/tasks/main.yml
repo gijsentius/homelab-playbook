@@ -1,6 +1,5 @@
 - name: Try to install powerdns packages
   become: true
-  delegate_to: "{{ host.ipv4 }}"
   block:
     - name: Update apt packages
       ansible.builtin.apt:
@@ -22,7 +21,6 @@
           - pdns-backend-mysql
 
 - name: Try to configure the database for powerdns
-  delegate_to: "{{ host.ipv4 }}"
   become: true
   block:
     - name: Update mysql root password
@@ -36,7 +34,7 @@
         priv: "*.*:ALL,GRANT"
         state: present
 
-    - name: Create a new databases with name '{{ powerdns.db.name }}'
+    - name: "Create a new databases with name {{ powerdns.db.name }}"
       community.mysql.mysql_db:
         name:
           - "{{ powerdns.db.name }}"
