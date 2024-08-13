@@ -1,7 +1,7 @@
 - name: Update apt packages
   ansible.builtin.apt:
-     cache_valid_time: 3600
-     update_cache: true
+    cache_valid_time: 3600
+    update_cache: true
 
 - name: Search apt cache for major docker version
   ansible.builtin.shell:
@@ -21,7 +21,7 @@
       - "docker-ce-cli={{ docker_version }}"
       - containerd.io
       - docker-buildx-plugin
-      - docker-compose-plugin 
+      - docker-compose-plugin
     allow_downgrade: true
   when: docker is defined
 
@@ -33,7 +33,7 @@
       - containerd.io
       - docker-buildx-plugin
       - docker-compose-plugin
-  when: docker is undefined 
+  when: docker is undefined
 
 - name: Ensure group "docker" exists
   ansible.builtin.group:
@@ -41,7 +41,15 @@
     state: present
 
 - name: Adding {{ lookup('env', 'USER') }} to docker group
-  user:
+  ansible.builtin.user:
     name: "{{ lookup('env', 'USER') }}"
     groups: docker
     append: yes
+  register: docker_group_result
+
+- name: Try to reset ssh connection to enable group change
+  block:
+    - name: Reset ssh connection to allow user changes to affect ansible user
+      ansible.builtin.meta:
+        reset_connection
+  when: docker_group_result.changed
