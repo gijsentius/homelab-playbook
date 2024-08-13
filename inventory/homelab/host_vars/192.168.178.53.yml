@@ -19,6 +19,3 @@ host:
       3831
   clone: ubuntu-2404-cloudinit-template
   skip_delete: true
-
-powerdns:
-  domain: gijsentius.com

@@ -4,9 +4,9 @@
   when: dns in group_names
 
 # Otherwise use api from dns server
-- name: Create dns record
+- name: Create dns zone
   ansible.builtin.uri:
-    url: "http://{{ item }}:{{ dns.port | default(8081) }}/servers/localhost/zones"
+    url: "http://{{ item }}:{{ dns.port | default(8081) }}/api/v1/servers/localhost/zones"
     method: POST
     body: "{{ lookup('ansible.builtin.template','zone.json.j2') }}"
     body_format: json

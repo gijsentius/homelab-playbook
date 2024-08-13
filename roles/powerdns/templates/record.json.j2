@@ -1,8 +1,20 @@
 {
-    "name": "{{ host.name }}", 
-    "kind": "Master",
-    "dnssec":false,
-    "soa-edit":"INCEPTION-INCREMENT",
-    "masters": [], 
-    "nameservers": ["{{ host.name }}.{{ host.zone }}."]
+    "rrsets": [
+        {
+            "name": "{{ host.name }}.{{ host.zone }}.",
+            "type": "A",
+            "changetype": "REPLACE",
+            "ttl": 86400,
+            "records":
+            [
+            {
+                "content": "{{ host.ipv4 }}",
+                "disabled": false,
+                "name": "{{ host.name }}.{{ host.zone }}.",
+                "type": "A",
+                "priority": 0
+            }
+            ]
+        }
+    ]
 }
