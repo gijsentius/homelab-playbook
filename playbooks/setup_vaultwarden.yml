@@ -22,10 +22,10 @@
         name: vaultwarden
         image: vaultwarden/server:latest
         volumes:
-          - /vw-data/:/data/
+          - "/home/{{ lookup('env', 'USER') }}/vw-data/:/data/"
         ports:
-          - "80:80"
-        restart_policy: "unless-stopped"
-        state: present
+          - "0.0.0.0:8080:80"
+        restart_policy: "always"
+        state: started
 
 
