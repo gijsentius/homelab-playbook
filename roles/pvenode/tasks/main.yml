@@ -22,4 +22,11 @@
   loop_control:
     loop_var: template
 
-
+- ansible.builtin.include_tasks: download_iso.yml 
+  args:
+    apply:
+      become: true
+      become_user: root  
+  loop: "{{ pvenode.isos }}"
+  loop_control:
+    loop_var: iso

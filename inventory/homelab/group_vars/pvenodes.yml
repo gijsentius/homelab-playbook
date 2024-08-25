@@ -16,3 +16,5 @@ pvenode:
     - id: 9004
       name: almalinux-8-cloudinit-template
       image_url: https://repo.almalinux.org/almalinux/8/cloud/x86_64/images/AlmaLinux-8-GenericCloud-latest.x86_64.qcow2
+  isos:
+    - https://factory.talos.dev/image/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515/v1.7.6/metal-amd64.iso
