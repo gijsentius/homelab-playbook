@@ -1,0 +1,9 @@
+# At first setup the pve hosts
+- import_playbook: playbooks/setup_pvenodes.yml
+# After the pve cluster is ready setup powerdns
+- import_playbook: playbooks/setup_powerdns.yml
+# Install a webserver to reverse proxy
+- import_playbook: playbooks/setup_caddy.yml
+# From now on the order does not really matter
+- import_playbook: playbooks/setup_vaultwarden.yml
+- import_playbook: playbooks/setup_filestore.yml

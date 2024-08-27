@@ -1,6 +1,7 @@
 - hosts: plex 
   gather_facts: false
   roles:
+    - role: common
     - role: plex
       delegate_to: localhost
 

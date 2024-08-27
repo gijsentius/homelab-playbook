@@ -1,0 +1,16 @@
+- name: Setup VM in proxmox for filestore
+  hosts: filestore 
+  gather_facts: false
+  roles:
+    - role: common
+    - role: proxmox
+      delegate_to: localhost
+
+- name: Setup NFS server
+  hosts: filestore
+  gather_facts: false
+  tasks:
+    - name: Create VM with Proxmox API
+      include_role:
+        name: nfs
+        tasks_from: server.yml 

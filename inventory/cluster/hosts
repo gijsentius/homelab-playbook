@@ -6,13 +6,16 @@
 [proxmox]
 localhost
 
-[rancher]
+[rancher-server]
 rancher-ctrl-1
-rancher-ctrl-2
-rancher-ctrl-3
+
+[rancher-agent]
 rancher-worker-1
 rancher-worker-2
 rancher-worker-3
+rancher-worker-4
+rancher-worker-5
+rancher-worker-6
 
 [powerdns]
 192.168.178.53

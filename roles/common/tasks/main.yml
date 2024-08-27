@@ -1,0 +1,2 @@
+- name: Load all common variables
+  import_tasks: load_vars.yml

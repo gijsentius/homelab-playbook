@@ -4,7 +4,7 @@
       throttle: 1
       community.general.proxmox_kvm:
         clone: "{{ host.clone }}"
-        name: "{{ host.name }}"
+        name: "{{ playbook_hostname }}"
         newid: "{{ host.vm_id | default(omit) }}"
         memory: "{{ host.memory | default('4096') }}"
         cores: "{{ host.cores | default('2') }}"
@@ -23,7 +23,7 @@
 
     - name: Update hardwarde parameters
       community.general.proxmox_kvm:
-        name: "{{ host.name }}"
+        name: "{{ playbook_hostname }}"
         timeout: "{{ proxmox.api.timeout | default(300) }}"
         node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user.full_name }}"
@@ -37,7 +37,7 @@
 
     - name: Configure cloud init parameters
       community.general.proxmox_kvm:
-        name: "{{ host.name }}"
+        name: "{{ playbook_hostname }}"
         timeout: "{{ proxmox.api.timeout | default(300) }}"
         node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user.full_name }}"
@@ -56,7 +56,7 @@
     
     - name: Start VM in proxmox
       community.general.proxmox_kvm:
-        name: "{{ host.name }}"
+        name: "{{ playbook_hostname }}"
         timeout: "{{ proxmox.api.timeout | default(300) }}"
         node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user.full_name }}"
@@ -69,11 +69,11 @@
       include_role:
         name: powerdns
         tasks_from: create_record
-      when: host.nameservers is defined
+      when: playbook_hostnameservers is defined
 
     - name: Retrieve info about VM in proxmox
       community.general.proxmox_vm_info:
-        name: "{{ host.name }}"
+        name: "{{ playbook_hostname }}"
         node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user.full_name }}"
         api_token_id: "{{ proxmox.api.token.id }}"
@@ -102,7 +102,7 @@
   rescue:
     - name: Remove VM from proxmox
       community.general.proxmox_kvm:
-        name: "{{ host.name }}"
+        name: "{{ playbook_hostname }}"
         node: "{{ host.node }}"
         api_user: "{{ proxmox.api.user.full_name }}"
         api_token_id: "{{ proxmox.api.token.id }}"

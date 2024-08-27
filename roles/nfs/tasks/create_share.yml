@@ -1,0 +1,27 @@
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: "{{ filestore_path }}" 
+    state: directory
+  become: true
+
+# NFS runs everything as nobody:nogroup
+- name: Change file ownership, group and permissions
+  ansible.builtin.file:
+    path: "{{ filestore_path }}"
+    owner: nobody
+    group: nogroup
+    mode: '0644'
+  become: true
+
+- name: Add directory to exported
+  ansible.builtin.lineinfile:
+    path: /etc/exports
+    regexp: '^{{ filestore_path }} '
+    line: "{{ filestore_path }}    {{ host.subnet_cidr }}(rw,sync,no_subtree_check)"
+  become: true
+
+- name: restart powerdns recursor
+  ansible.builtin.systemd_service:
+    state: restarted
+    name: nfs-kernel-server 
+  become: true

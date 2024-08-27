@@ -2,7 +2,6 @@ host:
   vm_id: 701
   name: plex
   zone: gijsentius.com
-  node: pve
   gateway: 192.168.178.1
   ipv4: 192.168.178.220
   nameservers: 

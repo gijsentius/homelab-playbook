@@ -1,7 +1,7 @@
 {
     "rrsets": [
         {
-            "name": "{{ host.name }}.{{ host.zone }}.",
+            "name": "{{ playbook_hostname }}.{{ host.zone }}.",
             "type": "A",
             "changetype": "REPLACE",
             "ttl": 86400,
@@ -10,7 +10,7 @@
             {
                 "content": "{{ host.ipv4 }}",
                 "disabled": false,
-                "name": "{{ host.name }}.{{ host.zone }}.",
+                "name": "{{ playbook_hostname }}.{{ host.zone }}.",
                 "type": "A",
                 "priority": 0
             }

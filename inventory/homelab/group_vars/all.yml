@@ -1,4 +1,8 @@
+host: {}
+
 proxmox:
+  nodes:
+    - pve
   api:
     host: 192.168.178.69
     user: 

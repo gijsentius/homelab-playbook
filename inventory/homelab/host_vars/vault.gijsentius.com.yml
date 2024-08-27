@@ -2,7 +2,6 @@ host:
   vm_id: 703
   name: vault
   zone: gijsentius.com
-  node: pve
   gateway: 192.168.178.1
   ipv4: 192.168.178.223
   nameservers: 

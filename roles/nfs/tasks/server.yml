@@ -1,0 +1,9 @@
+- name: Update apt packages
+  ansible.builtin.apt:
+    cache_valid_time: 3600
+    update_cache: true
+
+- name: Install NFS server 
+  ansible.builtin.apt:
+    pkg:
+      - nfs-kernel-server
