@@ -1,0 +1,15 @@
+- name: Install rancher server 
+  ansible.builtin.import_tasks: install_rke2_server.yml
+  become: true
+  when: 'rancher-server in groups' 
+
+- name: Retrieve server token from {{ . }}
+  ansible.builtin.set_fact: 
+    rancher_server_token: "{{ lookup('ansible.builtin.file', '/var/lib/rancher/rke2/server/node-token') }}"
+  delegate_to: rancher.server
+  when: 'rancher-agent' in groups 
+
+- name: Install rancher agent 
+  ansible.builtin.import_tasks: install_rke2_agent.yml
+  become: true
+  when: 'rancher-agent' in groups 
