@@ -14,7 +14,9 @@ host_password: !vault |
 
 proxmox:
   nodes:
-    - pve
+    - pve1
+    - pve2
+    - pve3
   api:
     host: 192.168.178.69
     user: 
