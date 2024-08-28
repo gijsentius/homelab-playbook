@@ -41,7 +41,7 @@
     - name: Remove old template
       community.general.proxmox_kvm:
         name: "{{ template.name }}"
-        node: "{{ host.node }}"
+        node: "{{ host_node }}"
         api_user: "{{ proxmox.api.user.full_name }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"

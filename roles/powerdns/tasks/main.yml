@@ -77,7 +77,7 @@
 
 - name: Try to further configure the system to enable powerdns
   become: true
-  delegate_to: "{{ host.ipv4 }}"
+  delegate_to: "{{ host_ipv4 }}"
   block:
     - name: Disable systemd-resolved 
       ansible.builtin.systemd_service:
@@ -127,7 +127,7 @@
 
 - name: Setup base domain as zone
   become: true
-  delegate_to: "{{ host.ipv4 }}"
+  delegate_to: "{{ host_ipv4 }}"
   when: powerdns.domain is defined
   ansible.builtin.command: >
     pdnsutil create-zone "{{ powerdns.domain }}"

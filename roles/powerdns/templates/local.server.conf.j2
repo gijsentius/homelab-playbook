@@ -1,5 +1,5 @@
 webserver=true
-webserver-allow-from={{ host.subnet_cidr }}
+webserver-allow-from={{ host_subnet_cidr }}
 #webserver-password={{ powerdns.server.password }}
 webserver-port={{ powerdns.server.port | default(8081) }}
 webserver-address=0.0.0.0

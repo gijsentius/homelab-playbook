@@ -1,19 +1,19 @@
-- name: "Create shares on {{ host.fileshare.ip }}"
+- name: "Create shares on {{ host_fileshare.ip }}"
   ansible.builtin.import_tasks:
     file: create_share.yml
-  loop: "{{ host.fileshare.paths }}" 
+  loop: "{{ host_fileshare.paths }}" 
   loop_control:
     loop_var: fileshare_path
-  delegate_to: "{{ host.fileshare.ip }}"
+  delegate_to: "{{ host_fileshare.ip }}"
 
 - name: "Write share in fstab"
   ansible.posix.mount:
-    src: "{{ host.fileshare.ip }}:{{ fileshare_path_mounted }}"
+    src: "{{ host_fileshare.ip }}:{{ fileshare_path_mounted }}"
     path: "{{ fileshare_path_mounted }}" 
     opts: rw,sync,hard
     boot: true
     state: mounted
     fstype: nfs
-  loop: "{{ host.fileshare.paths }}" 
+  loop: "{{ host_fileshare.paths }}" 
   loop_control:
     loop_var: fileshare_path_mounted

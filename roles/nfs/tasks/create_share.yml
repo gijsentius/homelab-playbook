@@ -17,7 +17,7 @@
   ansible.builtin.lineinfile:
     path: /etc/exports
     regexp: '^{{ filestore_path }} '
-    line: "{{ filestore_path }}    {{ host.subnet_cidr }}(rw,sync,no_subtree_check)"
+    line: "{{ filestore_path }}    {{ host_subnet_cidr }}(rw,sync,no_subtree_check)"
   become: true
 
 - name: restart powerdns recursor

@@ -1,2 +1,2 @@
 - name: Import host setup task
-  import_tasks: setup_host.yml
+  import_tasks: setup_host_yml

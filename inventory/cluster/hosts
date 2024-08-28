@@ -7,15 +7,15 @@
 localhost
 
 [rancher-server]
-rancher-ctrl-1
+rancher-ctrl-1.gijsentius.com
 
 [rancher-agent]
-rancher-worker-1
-rancher-worker-2
-rancher-worker-3
-rancher-worker-4
-rancher-worker-5
-rancher-worker-6
+rancher-agent-1.gijsentius.com
+rancher-agent-2.gijsentius.com
+rancher-agent-3.gijsentius.com
+rancher-agent-4.gijsentius.com
+rancher-agent-5.gijsentius.com
+rancher-agent-6.gijsentius.com
 
 [powerdns]
 192.168.178.53
