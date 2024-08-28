@@ -2,7 +2,6 @@
   hosts: filestore 
   gather_facts: false
   roles:
-    - role: common
     - role: proxmox
       delegate_to: localhost
 

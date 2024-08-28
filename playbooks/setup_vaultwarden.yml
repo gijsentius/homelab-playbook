@@ -1,7 +1,3 @@
-- hosts: vault 
-  roles:
-    - role: common
-
 - name: Setup VM in proxmox for vaultwarden
   hosts: vault 
   gather_facts: false

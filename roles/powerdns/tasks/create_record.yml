@@ -1,11 +1,11 @@
 # When executing on powerdns use pdnsutil
 - name: "Add record {{ host_zone}} with pdnsutil"
   ansible.builtin.command: >
-    pdnsutil add-record {{ host_zone }} {{ playbook_hostname }} A {{ host_ipv4 }}
+    pdnsutil add-record {{ host_zone }} {{ host_name }} A {{ host_ipv4 }}
   when: dns in group_names
 
 # Otherwise use api from dns server
-- name: "Create dns record {{ playbook_hostname }}.{{ host_zone }} with powerdns api"
+- name: "Create dns record {{ host_name }}.{{ host_zone }} with powerdns api"
   ansible.builtin.uri:
     url: "http://{{ item }}:8081/api/v1/servers/localhost/zones/{{ host_zone }}."
     method: PATCH
