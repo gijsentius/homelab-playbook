@@ -15,7 +15,7 @@
 - name: Add Ansible ssh key
   ansible.builtin.authorized_key:
     user: "{{ proxmox.api.user.name }}"
-    key: "{{ lookup('file', '/home/{{ proxmox.api.user.name }}/.ssh/id_rsa.pub') }}" 
+    key: "{{ lookup('file', '/home/{{ proxmox.api.user.name }}/.ssh/{{ proxmox.api.user.pub_key }}') }}" 
 
 - name: Add {{ proxmox.api.user.name }} to sudo
   ansible.builtin.user:

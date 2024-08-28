@@ -1,3 +1,4 @@
+host_node: pve
 pvenode_user: gijs
 pvenode_templates:
   - id: 90000
