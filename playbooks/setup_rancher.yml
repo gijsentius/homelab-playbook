@@ -5,7 +5,7 @@
     - role: proxmox
       delegate_to: localhost
 
-- name: Setup VM in proxmox for rancher servers
+- name: Setup rancher servers
   hosts: rancher_server
   roles:
     - role: rancher 
@@ -17,7 +17,7 @@
     - role: proxmox
       delegate_to: localhost
 
-- name: Setup VM in proxmox for rancher agents 
+- name: Setup rancher agents 
   hosts: rancher_agent
   roles:
     - role: rancher 

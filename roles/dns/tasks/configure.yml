@@ -1,0 +1,14 @@
+- name: Populate service facts
+  service_facts:
+
+- name: Update DNS config for systemd-resolved
+  ansible.builtin.template:
+    src: resolved.conf.j2
+    dest: /etc/systemd/resolved.conf
+  when: '"systemd-resolved" in services'
+
+- name: Restart systemd-resolved service 
+  ansible.builtin.systemd_service:
+    state: restarted 
+    name: systemd-resolved
+  when: '"systemd-resolved" in services'
