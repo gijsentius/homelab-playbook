@@ -8,6 +8,7 @@
 - name: Setup rancher servers
   hosts: rancher_server
   roles:
+    - role: common
     - role: rancher 
 
 - name: Setup VM in proxmox for rancher agents 
@@ -20,4 +21,5 @@
 - name: Setup rancher agents 
   hosts: rancher_agent
   roles:
+    - role: common
     - role: rancher 

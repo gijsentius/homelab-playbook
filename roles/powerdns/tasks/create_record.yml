@@ -5,7 +5,7 @@
   when: dns in group_names
 
 # Otherwise use api from dns server
-- name: "Create dns record {{ host_name }}.{{ host_zone }} with powerdns api"
+- name: "Create dns record with powerdns api"
   ansible.builtin.uri:
     url: "http://{{ item }}:8081/api/v1/servers/localhost/zones/{{ host_zone }}."
     method: PATCH

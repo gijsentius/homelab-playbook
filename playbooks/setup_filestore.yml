@@ -5,11 +5,17 @@
     - role: proxmox
       delegate_to: localhost
 
+- name: Run common tasks
+  hosts: filestore
+  gather_facts: true
+  roles:
+    - common
+
 - name: Setup NFS server
   hosts: filestore
-  gather_facts: false
+  gather_facts: true 
   tasks:
-    - name: Create VM with Proxmox API
+    - name: Configure nfs on VM 
       include_role:
         name: nfs
         tasks_from: server.yml 

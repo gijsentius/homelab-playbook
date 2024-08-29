@@ -71,12 +71,6 @@
         tasks_from: create_record
       when: host_nameservers is defined
 
-    - name: Configure dns settings
-      ansible.builtin.include_role:
-        name: dns
-        tasks_from: configure
-      when: host_nameservers is defined
-
     - name: Retrieve info about VM in proxmox
       community.general.proxmox_vm_info:
         name: "{{ host_name }}"

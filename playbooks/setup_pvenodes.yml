@@ -1,3 +1,4 @@
 - hosts: pvenodes
   roles:
+    - role: common
     - role: pvenode

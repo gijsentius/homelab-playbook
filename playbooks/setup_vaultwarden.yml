@@ -5,6 +5,12 @@
     - role: proxmox 
       delegate_to: localhost
 
+- name: Run common tasks
+  hosts: filestore
+  gather_facts: true
+  roles:
+    - common
+
 - name: Start vaultwarden on VM inside docker container
   hosts: vault
   gather_facts: true
