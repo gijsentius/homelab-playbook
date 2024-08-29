@@ -1,7 +1,7 @@
 localhost_public_key: id_ed25519.pub
 
 host_sshkeys: >
-  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIq57NcgI40GY+0bzWBqjwAz8Cf9B8uCkcC7WTb4owMraOCGsQNOLDWUQ1l/FNOG0wSQrQ8kvTZyqDIAJYhL+vQABmt48bqEalywBmEiOpxAJtLOTGgQpsVRlyDYcgUW7a8LAFncRdBfcOwytkXlUduUyi2KJufUFHjtfXoIymlbFFaODqzy4CbqH/isk6Uf9/gHPVbRjTCKK/IK4qRq138lzRcZtayiDXP+cD6SV/ewinOkarxPZFWhKSZU7hKvwUIVhtDpKNXn8ildHlhevdhPP0+63U/H84AZ/EyL4a2NdJJTjCFPhH+k+8UccSV75+R3VQCWCsLH+MFxbsjHwNtbPyGJZs2W9/5i3Xnh5X/bd+mcKMHU7zJ1UjcSIUN4KmOwrgiRaDI+dDWdNvSVPT6GKAqZLYbKHv4u2GLaORT7fNPYK8t2F5ttcsd730mmjGfOl8QopVUDtx1p59irV/A43LCZP8c8hWPoux61tFEU/KTmlr5cZKfj5AhZ3PaPU= gijs@steppingstone
+  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNNsu8By+Wc3ai8QNp0wipEM5SKvLC09nONPZu2wxZ gijs@gijs-Standard-PC-i440FX-PIIX-1996
   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPFEzpT1ChTKTFb7mhVOfkEnNREX2Z/oOMuSpxU+QGz g.m.entius@gmail.com
 host_user: gijs
 host_password: !vault |
