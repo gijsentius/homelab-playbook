@@ -1,15 +1,20 @@
-- name: "Create shares on {{ host_fileshare.ip }}"
+- name: "Install nfs client packages"
+  ansible.builtin.import_tasks:
+    file: client.yml
+  become: true
+
+- name: "Create shares on {{ host_fileshare.host }}"
   ansible.builtin.import_tasks:
     file: create_share.yml
   become: true
   loop: "{{ host_fileshare.paths }}" 
   loop_control:
     loop_var: fileshare_path
-  delegate_to: "{{ host_fileshare.ip }}"
+  delegate_to: "{{ host_fileshare.host }}"
 
 - name: "Write share in fstab"
   ansible.posix.mount:
-    src: "{{ host_fileshare.ip }}:{{ fileshare_path_mounted }}"
+    src: "{{ host_fileshare.host }}:{{ fileshare_path_mounted }}"
     path: "{{ fileshare_path_mounted }}" 
     opts: rw,sync,hard
     boot: true
