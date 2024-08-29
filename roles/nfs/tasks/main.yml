@@ -1,6 +1,7 @@
 - name: "Create shares on {{ host_fileshare.ip }}"
   ansible.builtin.import_tasks:
     file: create_share.yml
+  become: true
   loop: "{{ host_fileshare.paths }}" 
   loop_control:
     loop_var: fileshare_path
@@ -14,6 +15,7 @@
     boot: true
     state: mounted
     fstype: nfs
+  become: true
   loop: "{{ host_fileshare.paths }}" 
   loop_control:
     loop_var: fileshare_path_mounted

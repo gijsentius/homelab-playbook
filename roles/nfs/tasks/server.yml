@@ -7,3 +7,4 @@
   ansible.builtin.apt:
     pkg:
       - nfs-kernel-server
+  become: true
