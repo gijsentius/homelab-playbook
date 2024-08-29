@@ -6,10 +6,10 @@
 [proxmox]
 localhost
 
-[rancher-server]
+[rancher_server]
 rancher-server-1.gijsentius.com
 
-[rancher-agent]
+[rancher_agent]
 rancher-agent-1.gijsentius.com
 rancher-agent-2.gijsentius.com
 rancher-agent-3.gijsentius.com

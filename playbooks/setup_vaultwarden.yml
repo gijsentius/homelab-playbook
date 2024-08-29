@@ -1,13 +1,9 @@
 - name: Setup VM in proxmox for vaultwarden
   hosts: vault 
   gather_facts: false
-  tasks:
-    - name: Create VM with Proxmox API
-      include_role:
-        name: proxmox
-        tasks_from: setup_host
-        apply:
-          delegate_to: localhost
+  roles:
+    - role: proxmox 
+      delegate_to: localhost
 
 - name: Start vaultwarden on VM inside docker container
   hosts: vault

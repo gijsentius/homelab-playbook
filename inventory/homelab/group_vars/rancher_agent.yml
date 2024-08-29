@@ -1,0 +1,8 @@
+host_zone: gijsentius.com
+host_gateway: 192.168.178.1
+host_nameservers: 
+  - 192.168.178.53
+host_subnet: 24
+host_subnet_cidr: '192.168.178.0/24'
+host_clone: debian-12-bookworm-cloudinit-template
+rancher_server: rancher-server-1.gijsentius.com

@@ -15,3 +15,11 @@ filestore.gijsentius.com
 
 [vault]
 vault.gijsentius.com
+
+[rancher_server]
+rancher-server-1.gijsentius.com
+
+[rancher_agent]
+rancher-agent-1.gijsentius.com
+rancher-agent-2.gijsentius.com
+rancher-agent-3.gijsentius.com

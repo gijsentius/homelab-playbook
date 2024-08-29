@@ -1,12 +1,17 @@
+- name: Populate service facts
+  service_facts:
+
 - name: Download RKE2 install script 
   ansible.builtin.get_url:
     url: https://get.rke2.io
     validate_certs: false
     dest: "{{ rancher.install_dir | default('/tmp') }}/install.sh"
     mode: 0755
+  when: '"rke2-server" not in services'
 
 - name: Install RKE2 on server node
   ansible.builtin.command: "{{ rancher.install_dir | default('/tmp') }}/install.sh"
+  when: '"rke2-server" not in services'
 
 - name: Start RKE2 server service  
   ansible.builtin.systemd_service:

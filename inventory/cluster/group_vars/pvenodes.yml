@@ -1,4 +1,4 @@
-host_node: pve
+host_node: pve1
 pvenode_user: gijs
 pvenode_templates:
   - id: 90000

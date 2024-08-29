@@ -1,23 +1,23 @@
 - name: Setup VM in proxmox for rancher servers
-  hosts: rancher-server
+  hosts: rancher_server
   gather_facts: false
   roles:
     - role: proxmox
       delegate_to: localhost
 
 - name: Setup VM in proxmox for rancher servers
-  hosts: rancher-server
+  hosts: rancher_server
   roles:
     - role: rancher 
 
 - name: Setup VM in proxmox for rancher agents 
-  hosts: rancher-agent
+  hosts: rancher_agent
   gather_facts: false
   roles:
     - role: proxmox
       delegate_to: localhost
 
 - name: Setup VM in proxmox for rancher agents 
-  hosts: rancher-agent
+  hosts: rancher_agent
   roles:
     - role: rancher 

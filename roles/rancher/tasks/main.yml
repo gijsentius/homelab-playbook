@@ -1,15 +1,22 @@
 - name: Install rancher server 
   ansible.builtin.import_tasks: install_rke2_server.yml
   become: true
-  when: 'rancher-server in groups' 
+  when: '"server" in inventory_hostname' 
 
-- name: Retrieve server token from {{ . }}
+- name: Retrieve server token from {{ rancher_server }}
+  ansible.builtin.slurp: 
+    src: /var/lib/rancher/rke2/server/node-token
+  become: true
+  delegate_to: "{{ rancher_server }}"
+  register: rke_server_token_slurp
+  when: '"agent" in inventory_hostname' 
+
+- name: Register server token from {{ rancher_server }}
   ansible.builtin.set_fact: 
-    rancher_server_token: "{{ lookup('ansible.builtin.file', '/var/lib/rancher/rke2/server/node-token') }}"
-  delegate_to: rancher.server
-  when: 'rancher-agent' in groups 
+    rke_server_token: "{{ rke_server_token_slurp['content'] | b64decode }}"
+  when: '"agent" in inventory_hostname' 
 
 - name: Install rancher agent 
   ansible.builtin.import_tasks: install_rke2_agent.yml
   become: true
-  when: 'rancher-agent' in groups 
+  when: '"agent" in inventory_hostname' 
