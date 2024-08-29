@@ -1,7 +1,7 @@
 {
     "rrsets": [
         {
-            "name": "{{ host_name }}.",
+            "name": "{{ host_name }}.{{ host_zone }}.",
             "type": "A",
             "changetype": "REPLACE",
             "ttl": 86400,
@@ -10,7 +10,7 @@
             {
                 "content": "{{ host_ipv4 }}",
                 "disabled": false,
-                "name": "{{ host_name }}.",
+                "name": "{{ host_name }}.{{ host_zone }}.",
                 "type": "A",
                 "priority": 0
             }
