@@ -3,7 +3,7 @@
     cache_valid_time: 3600
     update_cache: true
 
-- name: Install docker when not already available 
+- name: Install specific docker version
   block:
     - name: Search apt cache for major docker version
       ansible.builtin.shell:
@@ -23,28 +23,30 @@
           - docker-buildx-plugin
           - docker-compose-plugin
         allow_downgrade: true
+  when: docker_version is defined
 
-    - name: Install docker
-      ansible.builtin.apt:
-        pkg:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-          - docker-buildx-plugin
-          - docker-compose-plugin
 
-    - name: Ensure group "docker" exists
-      ansible.builtin.group:
-        name: docker
-        state: present
+- name: Install latest docker version from repository
+  ansible.builtin.apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+  when: docker_version is not defined
 
-    - name: Adding {{ lookup('env', 'USER') }} to docker group
-      ansible.builtin.user:
-        name: "{{ lookup('env', 'USER') }}"
-        groups: docker
-        append: yes
+- name: Ensure group "docker" exists
+  ansible.builtin.group:
+    name: docker
+    state: present
 
-    - name: Reset ssh connection to allow user changes to affect ansible user
-      ansible.builtin.meta:
-        reset_connection
-  when: docker is defined
+- name: Adding {{ lookup('env', 'USER') }} to docker group
+  ansible.builtin.user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: docker
+    append: yes
+
+- name: Reset ssh connection to allow user changes to affect ansible user
+  ansible.builtin.meta:
+    reset_connection
