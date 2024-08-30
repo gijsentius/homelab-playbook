@@ -2,8 +2,16 @@
   ansible.builtin.apt:
     cache_valid_time: 3600
     update_cache: true
+  when: ansible_facts['os_family']|lower == 'debian'
 
-- name: Install NFS client 
+- name: Install NFS client for Debian and Ubuntu
   ansible.builtin.apt:
     pkg:
       - nfs-common
+  when: ansible_facts['os_family']|lower == 'debian'
+
+- name: Install NFS client for CentOS and Fedora
+  ansible.builtin.yum:
+    name: nfs-utils
+    update_cache: true
+  when: ansible_facts['os_family']|lower == 'redhat'

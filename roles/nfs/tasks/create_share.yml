@@ -1,27 +1,31 @@
 - name: Create a directory if it does not exist
   ansible.builtin.file:
-    path: "{{ filestore_path }}" 
+    path: "{{ fileshare.path }}" 
     state: directory
   become: true
+  delegate_to: "{{ fileshare.host }}"
 
 # NFS runs everything as nobody:nogroup
 - name: Change file ownership, group and permissions
   ansible.builtin.file:
-    path: "{{ filestore_path }}"
+    path: "{{ fileshare.path }}"
     owner: nobody
     group: nogroup
     mode: '0644'
   become: true
+  delegate_to: "{{ fileshare.host }}"
 
 - name: Add directory to exported
   ansible.builtin.lineinfile:
     path: /etc/exports
-    regexp: '^{{ filestore_path }} '
-    line: "{{ filestore_path }}    {{ host_subnet_cidr }}(rw,sync,no_subtree_check)"
+    regexp: '^{{ fileshare.path }} '
+    line: "{{ fileshare.path }}    {{ host_subnet_cidr }}(rw,sync,no_subtree_check)"
   become: true
+  delegate_to: "{{ fileshare.host }}"
 
-- name: restart powerdns recursor
+- name: Restart nfs server
   ansible.builtin.systemd_service:
     state: restarted
     name: nfs-kernel-server 
   become: true
+  delegate_to: "{{ fileshare.host }}"

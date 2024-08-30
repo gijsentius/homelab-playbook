@@ -10,8 +10,8 @@ plex.gijsentius.com
 [sabnzb]
 sabnzb.gijsentius.com
 
-[filestore]
-filestore.gijsentius.com
+[nfs]
+nfs.gijsentius.com
 
 [vault]
 vault.gijsentius.com

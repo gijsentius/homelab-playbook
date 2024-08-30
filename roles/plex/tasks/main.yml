@@ -16,9 +16,9 @@
     name: plex 
     image: lscr.io/linuxserver/plex:latest
     volumes:
-      - /path/to/plex/library:/config
-      - /path/to/tvseries:/tv
-      - /path/to/movies:/movies 
+      - ~/config/plex:/config
+      - ~/plex/media/tv:/tv
+      - ~/plex/media/movies:/movies 
     restart_policy: "always"
     state: started
     ports:
@@ -29,7 +29,7 @@
     name: sonarr 
     image: lscr.io/linuxserver/sonarr:latest
     volumes:
-      - /path/to/sonarr/data:/config
+      - ~/config/sonarr:/config
     ports:
       - 8989:8989 
     restart_policy: "always"
@@ -40,7 +40,7 @@
     name: radarr 
     image: lscr.io/linuxserver/radarr:latest
     volumes:
-      - /path/to/radarr/data:/config
+      - ~/config/radarr:/config
     ports:
       - 7878:7878
     restart_policy: "always"

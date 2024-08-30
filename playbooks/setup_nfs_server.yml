@@ -1,18 +1,18 @@
-- name: Setup VM in proxmox for filestore
-  hosts: filestore 
+- name: Setup VM in proxmox for NFS server 
+  hosts: nfs  
   gather_facts: false
   roles:
     - role: proxmox
       delegate_to: localhost
 
 - name: Run common tasks
-  hosts: filestore
+  hosts: nfs
   gather_facts: true
   roles:
     - common
 
 - name: Setup NFS server
-  hosts: filestore
+  hosts: nfs 
   gather_facts: true 
   tasks:
     - name: Configure nfs on VM 

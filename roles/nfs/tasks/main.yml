@@ -3,24 +3,30 @@
     file: client.yml
   become: true
 
-- name: "Create shares on {{ host_fileshare.host }}"
-  ansible.builtin.import_tasks:
+- name: "Create fileshares on remote"
+  ansible.builtin.include_tasks:
     file: create_share.yml
-  become: true
-  loop: "{{ host_fileshare.paths }}" 
+  loop: "{{ host_fileshares }}" 
   loop_control:
-    loop_var: fileshare_path
-  delegate_to: "{{ host_fileshare.host }}"
+    loop_var: fileshare
 
-- name: "Write share in fstab"
+- name: "Create fileshare folders"
+  ansible.builtin.file:
+    path: "{{ fileshare.path }}" 
+    state: directory
+  loop: "{{ host_fileshares }}" 
+  loop_control:
+    loop_var: fileshare
+
+- name: "Write shares in fstab"
   ansible.posix.mount:
-    src: "{{ host_fileshare.host }}:{{ fileshare_path_mounted }}"
-    path: "{{ fileshare_path_mounted }}" 
+    src: "{{ fileshare.host }}:{{ fileshare.path }}"
+    path: "{{ fileshare.path }}" 
     opts: rw,sync,hard
     boot: true
     state: mounted
     fstype: nfs
   become: true
-  loop: "{{ host_fileshare.paths }}" 
+  loop: "{{ host_fileshares }}" 
   loop_control:
-    loop_var: fileshare_path_mounted
+    loop_var: fileshare
