@@ -10,5 +10,5 @@ host_subnet_cidr: '192.168.178.0/24'
 host_clone: ubuntu-2404-cloudinit-template
 host_remove_failed: true
 host_fileshares:
-  - path: ~/plex/media 
+  - path: /home/gijs/plex/media 
     host: nfs.gijsentius.com

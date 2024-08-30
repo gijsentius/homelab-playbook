@@ -9,8 +9,8 @@
 - name: Change file ownership, group and permissions
   ansible.builtin.file:
     path: "{{ fileshare.path }}"
-    owner: nobody
-    group: nogroup
+    owner: "{{ host_user | default(nobody) }}"
+    group: "{{ host_user | default(nogroup) }}"
     mode: '0644'
   become: true
   delegate_to: "{{ fileshare.host }}"
@@ -19,7 +19,7 @@
   ansible.builtin.lineinfile:
     path: /etc/exports
     regexp: '^{{ fileshare.path }} '
-    line: "{{ fileshare.path }}    {{ host_subnet_cidr }}(rw,sync,no_subtree_check)"
+    line: "{{ fileshare.path }}    {{ host_subnet_cidr }}(rw,sync,no_root_squash,no_subtree_check)"
   become: true
   delegate_to: "{{ fileshare.host }}"
 

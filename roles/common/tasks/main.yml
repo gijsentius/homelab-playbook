@@ -1,4 +1,7 @@
+- name: Configure ssh key for {{ inventory_hostname }}
+  ansible.builtin.import_tasks: configure_access.yml 
+
 - name: Configure DNS for {{ inventory_hostname }}
   ansible.builtin.import_tasks: configure_dns.yml
   become: true
-  when: host_nameservers is defined 
+  when: host_nameservers is defined

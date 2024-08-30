@@ -51,7 +51,7 @@
         autostart: "{{ host_autostart | default(true)  }}"
         ciuser: "{{ host_user }}"
         cipassword: "{{ host_password }}"
-        sshkeys: "{{ host_sshkeys | default(omit) }}"
+        sshkeys: "{{ host_ssh_keys | default(omit) }}"
         net:
           net0: "virtio,bridge={{ host_bridge | default('vmbr0') }},tag=77" 
         ipconfig:
