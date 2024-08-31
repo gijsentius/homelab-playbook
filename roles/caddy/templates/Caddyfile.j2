@@ -1,0 +1,13 @@
+{% for caddy_server in caddy_servers %}
+{{ caddy_server.server }} {
+{% if caddy_server.protocol == 'https' and caddy_server.self_signed %}
+    reverse_proxy {{ caddy_server.protocol }}://{{ caddy_server.host }}:{{ caddy_server.port }} {
+        transport http {
+            tls_insecure_skip_verify
+        }
+    }
+{% else %}
+    reverse_proxy {{ caddy_server.protocol }}://{{ caddy_server.host }}:{{ caddy_server.port }}
+{% endif %}
+}
+{% endfor %}

@@ -16,6 +16,9 @@ nfs.gijsentius.com
 [vault]
 vault.gijsentius.com
 
+[caddy]
+caddy.gijsentius.com
+
 [rancher_server]
 rancher-server-1.gijsentius.com
 

@@ -25,6 +25,11 @@
         state: present
       register: created_vm
 
+    - name: Sleep for 30 seconds
+      ansible.builtin.wait_for:
+        timeout: 30 
+      when: created_vm.changed
+
     - name: Update hardwarde parameters
       community.general.proxmox_kvm:
         name: "{{ host_name }}"
@@ -38,6 +43,7 @@
         cores: "{{ host_cores | default('2') }}"
         update: true
       ignore_errors: true
+      register: proxmox_hardware_update
 
     - name: Configure cloud init parameters
       community.general.proxmox_kvm:
@@ -57,6 +63,7 @@
         ipconfig:
           ipconfig0: "ip={{ host_ipv4 }}/{{ host_subnet }},gw={{ host_gateway }}" 
         update: true
+      when: created_vm.changed
     
     - name: Start VM in proxmox
       community.general.proxmox_kvm:

@@ -1,1 +1,12 @@
-# TODO create a playbook to setup caddy 
+- name: Setup VM in proxmox for caddy 
+  hosts: caddy 
+  gather_facts: false
+  roles:
+    - role: proxmox 
+      delegate_to: localhost
+
+- hosts: caddy 
+  gather_facts: true
+  roles:
+    - role: common
+    - role: caddy 

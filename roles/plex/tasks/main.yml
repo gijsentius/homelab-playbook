@@ -45,3 +45,16 @@
       - 7878:7878
     restart_policy: "always"
     state: started
+
+- name: start overseerr docker container
+  community.docker.docker_container:
+    name: overseerr 
+    image: sctx/overseerr
+    env:
+      TZ: Europe/Amstedam
+    volumes:
+      - ~/config/overseerr:/app/config
+    ports:
+      - 5055:5055
+    restart_policy: "always"
+    state: started

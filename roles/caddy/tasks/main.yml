@@ -1,0 +1,32 @@
+- name: Update apt packages
+  ansible.builtin.apt:
+    cache_valid_time: 3600
+    update_cache: true
+  become: true
+
+- name: Install caddy server
+  ansible.builtin.apt:
+    pkg: caddy
+    state: present
+  become: true
+
+- name: Start caddy service
+  ansible.builtin.systemd_service:
+    name: caddy
+    state: started
+  become: true
+
+- name: Write caddy config
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: /etc/caddy/Caddyfile
+    mode: '0644'
+  register: caddy_config_template_output
+  become: true
+
+- name: Restart caddy 
+  ansible.builtin.systemd_service:
+    name: caddy
+    state: restarted
+  become: true
+  when: caddy_config_template_output.changed 
