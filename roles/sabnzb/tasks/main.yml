@@ -23,6 +23,11 @@
         src: sabnzbd.ini.j2
         dest: "/home/{{ host_user }}/.sabnzbd/sabnzbd.ini"
 
+    - name: Create /etc/default/sabnzbdplus
+      ansible.builtin.template:
+        src: sabnzbdplus.j2
+        dest: /etc/default/sabnzbdplus
+
     - name: Start sabnzbd service
       ansible.builtin.systemd_service:
         name: sabnzbdplus
