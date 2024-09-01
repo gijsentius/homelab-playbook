@@ -5,9 +5,22 @@
     - role: proxmox 
       delegate_to: localhost
 
+- name: Setup VM in proxmox for sabnzb 
+  hosts: sabnzb
+  gather_facts: false
+  roles:
+    - role: proxmox 
+      delegate_to: localhost
+
 - hosts: plex
   gather_facts: true
   roles:
     - role: common
     - role: docker
     - role: plex
+
+- hosts: sabnzb
+  gather_facts: true
+  roles:
+    - role: common
+    - role: sabnzb

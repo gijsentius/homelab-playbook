@@ -1,0 +1,31 @@
+- name: Install sabnzb
+  block:
+    - name: Add sabnzb repository
+      ansible.builtin.apt_repository:
+        repo: ppa:jcfp/nobetas
+
+    - name: Update apt packages
+      ansible.builtin.apt:
+        cache_valid_time: 3600
+        update_cache: true
+
+    - name: Install sabnzb
+      ansible.builtin.apt:
+        name: sabnzbdplus
+
+    # - name: Update sabnzb service file
+    #   ansible.builtin.template:
+    #     src: Caddyfile.j2
+    #     dest: /etc/caddy/Caddyfile
+    #     mode: '0644'
+
+    - name: Create sabnzb config
+      ansible.builtin.template:
+        src: sabnzbd.ini.j2
+        dest: "/home/{{ host_user }}/.sabnzbd/sabnzbd.ini"
+
+    - name: Start sabnzb service
+      ansible.builtin.systemd_service:
+        name: sabnzbdplus
+        state: started
+  become: true
