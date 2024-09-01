@@ -23,9 +23,9 @@
     public_key_content: "{{ ssh_public_key.content | ansible.builtin.b64decode }}"
 
 - name: Add public key to authorized keys of remotes
-  ansible.builtin.template:
-    src: authorized_keys.j2 
-    dest: "/home/{{ host_user }}/.ssh/authorized_keys"
+  ansible.builtin.lineinfile:
+    path: "/home/{{ host_user }}/.ssh/authorized_keys"
+    line: "{{ public_key_content }}" 
   when:
     - host_fileshares is defined
   loop: "{{ host_fileshares }}"
