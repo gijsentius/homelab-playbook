@@ -13,12 +13,6 @@
       ansible.builtin.apt:
         name: sabnzbdplus
 
-    # - name: Update sabnzb service file
-    #   ansible.builtin.template:
-    #     src: Caddyfile.j2
-    #     dest: /etc/caddy/Caddyfile
-    #     mode: '0644'
-
     - name: Create sabnzb config directory
       ansible.builtin.file:
         path: "/home/{{ host_user }}/.sabnzbd" 
@@ -29,8 +23,9 @@
         src: sabnzbd.ini.j2
         dest: "/home/{{ host_user }}/.sabnzbd/sabnzbd.ini"
 
-    - name: Start sabnzb service
+    - name: Start sabnzbd service
       ansible.builtin.systemd_service:
         name: sabnzbdplus
+        enabled: true
         state: started
   become: true
