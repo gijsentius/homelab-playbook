@@ -8,3 +8,9 @@ host_nameservers:
 host_subnet: 24
 host_subnet_cidr: '192.168.178.0/24'
 host_clone: ubuntu-2404-cloudinit-template
+host_disks:
+  - disk: scsi1
+    backup: true
+    cache: none
+    storage: storage-1
+    size: 3072

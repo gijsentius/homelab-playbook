@@ -3,6 +3,8 @@
     - name: Choose pve node
       ansible.builtin.set_fact:
         proxmox_pve_node: "{{ proxmox.nodes | random }}" 
+    
+    # TODO autodiscover the pve node when the vm already exists
 
     - name: Setup VM in proxmox
       throttle: 1
@@ -29,7 +31,7 @@
       ansible.builtin.wait_for:
         timeout: 30 
       when: created_vm.changed
-
+      
     - name: Update hardwarde parameters
       community.general.proxmox_kvm:
         name: "{{ host_name }}"
@@ -44,6 +46,9 @@
         update: true
       ignore_errors: true
       register: proxmox_hardware_update
+
+    - name: Update drive configuration
+      ansible.builtin.import_tasks: add_storage.yml
 
     - name: Configure cloud init parameters
       community.general.proxmox_kvm:
@@ -75,22 +80,13 @@
         api_token_secret: "{{ proxmox.api.token.secret }}"
         api_host: "{{ proxmox.api.host }}"
         state: started
+      register: proxmox_vm_started
 
     - name: Register hostname at DNS server
       ansible.builtin.include_role:
         name: powerdns
         tasks_from: create_record
       when: host_nameservers is defined
-
-    - name: Retrieve info about VM in proxmox
-      community.general.proxmox_vm_info:
-        name: "{{ host_name }}"
-        node: "{{ proxmox_pve_node }}"
-        api_user: "{{ proxmox.api.user.full_name }}"
-        api_token_id: "{{ proxmox.api.token.id }}"
-        api_token_secret: "{{ proxmox.api.token.secret }}"
-        api_host: "{{ proxmox.api.host }}"
-      register: proxmox_vm_info
 
     - name: Wait for the machine to come online
       ansible.builtin.wait_for_connection:

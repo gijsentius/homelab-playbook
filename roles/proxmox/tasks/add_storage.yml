@@ -1,0 +1,44 @@
+- name: Retrieve current VM status
+  community.general.proxmox_kvm:
+    name: "{{ host_name }}"
+    timeout: "{{ proxmox.api.timeout | default(300) }}"
+    node: "{{ proxmox.nodes | random }}"
+    api_user: "{{ proxmox.api.user.full_name }}"
+    api_token_id: "{{ proxmox.api.token.id }}"
+    api_token_secret: "{{ proxmox.api.token.secret }}"
+    api_host: "{{ proxmox.api.host }}"
+    state: current
+  register: proxmox_vm_current
+
+- name: Create new disk in VM (do not rewrite in case it exists already)
+  community.general.proxmox_disk:
+    api_user: "{{ proxmox.api.user.full_name }}"
+    api_token_id: "{{ proxmox.api.token.id }}"
+    api_token_secret: "{{ proxmox.api.token.secret }}"
+    api_host: "{{ proxmox.api.host }}"
+    name: "{{ host_name }}"
+    disk: "{{ host_disk.disk }}"
+    backup: "{{ host_disk.backup | default(false) }}"
+    format: raw
+    cache: "{{ host_disk.cache | default(none) }}"
+    storage: "{{ host_disk.storage }}"
+    size: "{{ host_disk.size }}"
+    state: present
+  loop: "{{ host_disks }}" 
+  loop_control:
+    loop_var: host_disk
+  register: proxmox_vm_disk_update
+
+- name: Restart VM in proxmox
+  community.general.proxmox_kvm:
+    name: "{{ host_name }}"
+    timeout: "{{ proxmox.api.timeout | default(300) }}"
+    node: "{{ proxmox.nodes | random }}"
+    api_user: "{{ proxmox.api.user.full_name }}"
+    api_token_id: "{{ proxmox.api.token.id }}"
+    api_token_secret: "{{ proxmox.api.token.secret }}"
+    api_host: "{{ proxmox.api.host }}"
+    state: restarted
+  when: 
+    - proxmox_vm_disk_update.changed
+    - proxmox_vm_current.status == 'running'
