@@ -11,7 +11,7 @@
     path: "{{ fileshare.path }}"
     owner: "{{ host_user | default(nobody) }}"
     group: "{{ host_user | default(nogroup) }}"
-    mode: '0644'
+    mode: '0766'
   become: true
   delegate_to: "{{ fileshare.host }}"
 

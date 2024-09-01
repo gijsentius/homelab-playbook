@@ -1,7 +1,3 @@
-- name: Setup NFS and create mounts 
-  include_role:
-    name: nfs
-
 - name: Start watchtower docker container
   community.docker.docker_container:
     name: watchtower

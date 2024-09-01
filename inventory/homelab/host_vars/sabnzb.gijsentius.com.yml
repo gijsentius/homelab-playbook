@@ -12,5 +12,5 @@ host_remove_failed: true
 host_memory: '4096'
 host_cores: '4'
 host_fileshares:
-  - path: /home/gijs/plex/media 
+  - path: /home/gijs/plex/downloads 
     host: nfs.gijsentius.com

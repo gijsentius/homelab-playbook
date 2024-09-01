@@ -13,6 +13,7 @@
 - name: "Create fileshare folders"
   ansible.builtin.file:
     path: "{{ fileshare.path }}" 
+    mode: '0766'
     state: directory
   loop: "{{ host_fileshares }}" 
   loop_control:

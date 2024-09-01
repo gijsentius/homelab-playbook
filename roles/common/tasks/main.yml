@@ -5,3 +5,8 @@
   ansible.builtin.import_tasks: configure_dns.yml
   become: true
   when: host_nameservers is defined
+
+- name: Configure nfs mounts for {{ inventory_hostname }}
+  include_role:
+    name: nfs
+  when: host_fileshares is defined

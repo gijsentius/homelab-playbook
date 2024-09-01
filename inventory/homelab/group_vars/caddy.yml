@@ -15,6 +15,10 @@ caddy_servers:
     host: plex.gijsentius.com
     port: 5055
     protocol: http
+  - server: sabnzb.gijsentius.com
+    host: sabnzb.gijsentius.com
+    port: 8080
+    protocol: http
   - server: dc.gijsentius.com
     host: 192.168.178.69
     port: 8006

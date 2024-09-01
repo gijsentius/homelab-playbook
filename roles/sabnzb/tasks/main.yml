@@ -17,11 +17,8 @@
       ansible.builtin.file:
         path: "/home/{{ host_user }}/.sabnzbd" 
         state: directory
-
-    - name: Create sabnzb config
-      ansible.builtin.template:
-        src: sabnzbd.ini.j2
-        dest: "/home/{{ host_user }}/.sabnzbd/sabnzbd.ini"
+      become_user: "{{ host_user }}"
+      become: false
 
     - name: Create /etc/default/sabnzbdplus
       ansible.builtin.template:
@@ -33,4 +30,18 @@
         name: sabnzbdplus
         enabled: true
         state: started
+    
+    - name: Add host to whitelist
+      ansible.builtin.lineinfile:
+        path: "/home/{{ host_user }}/.sabnzbd/sabnzbd.ini"
+        line: "host_whitelist = {{ host_name }}.{{ host_zone }}" 
+        search_string: "host_whitelist ="
+        create: true
+      register: sabnzb_add_host_to_whitelist
+
+    - name: Restart sabnzb service
+      ansible.builtin.systemd_service:
+        name: sabnzbdplus
+        state: restarted
+      when: sabnzb_add_host_to_whitelist.changed
   become: true
