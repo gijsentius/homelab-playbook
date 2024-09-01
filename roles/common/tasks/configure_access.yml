@@ -26,6 +26,7 @@
   ansible.builtin.lineinfile:
     path: "/home/{{ host_user }}/.ssh/authorized_keys"
     line: "{{ public_key_content }}" 
+    search_string: "{{ public_key_content }}"
   when:
     - host_fileshares is defined
   loop: "{{ host_fileshares }}"
