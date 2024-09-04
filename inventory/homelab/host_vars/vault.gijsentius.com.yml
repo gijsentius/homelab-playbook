@@ -7,5 +7,6 @@ host_nameservers:
   - 192.168.178.53
 host_subnet: 24
 host_subnet_cidr: '192.168.178.0/24'
-host_memory: '2048' 
+host_memory: '2048'
+host_snapshot: true
 host_clone: ubuntu-2404-cloudinit-template
