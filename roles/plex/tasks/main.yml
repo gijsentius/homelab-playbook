@@ -42,15 +42,28 @@
     restart_policy: "always"
     state: started
 
-- name: start overseerr docker container
+#- name: start overseerr docker container
+#  community.docker.docker_container:
+#    name: overseerr 
+#    image: sctx/overseerr
+#    env:
+#      TZ: Europe/Amstedam
+#    volumes:
+#      - ~/config/overseerr:/app/config
+#    ports:
+#      - 5055:5055
+#    restart_policy: "always"
+#    state: started
+
+- name: Start ombi docker container
   community.docker.docker_container:
-    name: overseerr 
-    image: sctx/overseerr
+    name: ombi
+    image: lscr.io/linuxserver/ombi:latest
     env:
-      TZ: Europe/Amstedam
+      TZ: Europe/Amsterdam
     volumes:
-      - ~/config/overseerr:/app/config
+      - ~/config/ombi:/config
     ports:
-      - 5055:5055
+      - 3579:3579
     restart_policy: "always"
     state: started
