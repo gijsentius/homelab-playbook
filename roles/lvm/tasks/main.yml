@@ -1,0 +1,58 @@
+- name: Install and setup lvm
+  block:
+    - name: Update apt packages
+      ansible.builtin.apt:
+        cache_valid_time: 3600
+        update_cache: true
+      when: ansible_facts['os_family']|lower == 'debian'
+
+    - name: Install lvm2 for debian 
+      ansible.builtin.apt:
+        pkg:
+          - lvm2 
+      when: ansible_facts['os_family']|lower == 'debian'
+
+    - name: Gather unused disks 
+      set_fact:
+        disks: "{{ disks|default([]) + ['/dev/' + item.key] }}"
+      when:
+      - not item.value.partitions
+      - item.key | regex_search ("sd")
+      with_dict: "{{ ansible_devices }}"
+
+    - name: Create the "{{ lvm_vg_name }}" Volume group.
+      ansible.builtin.lvg:
+        pvs: "{{ disks }}" 
+        vg: "{{ lvm_vg_name }}"
+        force: no
+        state: present
+
+    - name: Create the "{{ lvm_lv_name }}" Logical Volume.
+      ansible.builtin.lvol:
+        vg: "{{ lvm_vg_name }}"
+        lv: "{{ lvm_lv_name }}"
+        size: "{{ lvm_lv_size }}"
+        active: yes
+        force: no
+        state: present
+
+    - name: Create a "{{ lvm_fs | default('ext4') }}" filesystem on lvm "/dev/mapper/{{ lvm_vg_name}}-{{ lvm_lv_name}}".
+      ansible.builtin.filesystem:
+        fstype: "{{ lvm_fs | default('ext4') }}"
+        dev: "/dev/mapper/{{ lvm_vg_name }}-{{ lvm_lv_name }}"
+        force: no
+
+    - name: Create a directory to mount the filesystem.
+      ansible.builtin.file:
+        path: "{{ lvm_mount_point }}"
+        state: directory
+        mode: '0755'
+
+    - name: Mount the created "{{ lvm_fs | default('ext4') }}" filesystem.
+      ansible.builtin.mount:
+        path: "{{ lvm_mount_point }}"
+        src: "/dev/mapper/{{ lvm_vg_name}}-{{ lvm_lv_name}}"
+        fstype: "{{ lvm_fs | default('ext4') }}"
+        opts: rw,nosuid,noexec
+        state: mounted
+  become: true

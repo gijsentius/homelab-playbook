@@ -14,3 +14,8 @@ host_disks:
     cache: none
     storage: storage-1
     size: 3072
+
+lvm_vg_name: os
+lvm_lv_name: home
+lvm_lv_size: '100%FREE'
+lvm_mount_point: /home 

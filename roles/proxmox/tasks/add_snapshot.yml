@@ -1,4 +1,4 @@
-- name: Create new container snapshot and keep only the 2 newest snapshots
+- name: Create a snapshot and keep only the 2 newest snapshots
   community.general.proxmox_snap:
     api_host: "{{ proxmox_pve_node }}"
     api_user: "{{ proxmox.api.user.full_name }}"
