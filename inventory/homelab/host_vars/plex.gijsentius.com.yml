@@ -11,9 +11,6 @@ host_clone: ubuntu-2404-cloudinit-template
 host_memory: '8192'
 host_cores: '4'
 host_fileshares:
-  - remote_path: /mnt/share/plex/media
-    local_path: /home/gijs/plex/media
-    host: nfs.gijsentius.com
-  - remote_path: /mnt/share/plex/downloads
-    local_path: /home/gijs/plex/downloads
+  - remote_path: /mnt/share/plex/data
+    local_path: /home/gijs/plex/data
     host: nfs.gijsentius.com

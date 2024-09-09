@@ -11,7 +11,7 @@
     path: "{{ fileshare.remote_path }}"
     owner: "{{ host_user | default(nobody) }}"
     group: "{{ host_user | default(nogroup) }}"
-    mode: '0766'
+    mode: '0666'
   become: true
   delegate_to: "{{ fileshare.host }}"
 
@@ -19,7 +19,7 @@
   ansible.builtin.lineinfile:
     path: /etc/exports
     regexp: '^{{ fileshare.remote_path }} '
-    line: "{{ fileshare.remote_path }}    {{ host_subnet_cidr }}(rw,sync,no_root_squash,no_subtree_check)"
+    line: "{{ fileshare.remote_path }}    {{ host_subnet_cidr }}(rw,sync,no_root_squash,no_subtree_check,uid={{ fileshare.uid | default(1000) }},gid={{ fileshare.gid | default(1000) }})"
   become: true
   delegate_to: "{{ fileshare.host }}"
 

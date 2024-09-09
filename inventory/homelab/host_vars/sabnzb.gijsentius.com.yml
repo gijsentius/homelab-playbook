@@ -11,8 +11,8 @@ host_clone: ubuntu-2404-cloudinit-template
 host_memory: '4096'
 host_cores: '4'
 host_fileshares:
-  - remote_path: /mnt/share/plex/downloads
-    local_path: /home/gijs/plex/downloads
+  - remote_path: /mnt/share/plex/data
+    local_path: /home/gijs/plex/data
     host: nfs.gijsentius.com
 
 sabnzb_api_key: !vault |
@@ -23,8 +23,8 @@ sabnzb_api_key: !vault |
     6331316135646462320a623865346534623139616536346536663235396666383637653261326162
     62393062353138373564343464616465396363323861633830393361323138346663306537613735
     6564623332656333633263663533323036376263343537396635
-sabnzb_download_dir: /home/gijs/plex/downloads/incomplete
-sabnzb_complete_dir: /home/gijs/plex/downloads/complete
+sabnzb_download_dir: /home/gijs/plex/data/usenet/incomplete
+sabnzb_complete_dir: /home/gijs/plex/data/usenet/complete
 sabnzb_servers:
   - host: news.eweka.nl
     user: !vault | 

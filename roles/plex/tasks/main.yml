@@ -2,6 +2,10 @@
   community.docker.docker_container:
     name: watchtower
     image: containrrr/watchtower:latest
+    env:
+      TZ: Europe/Amsterdam
+      PUID: '1000'
+      PGID: '1000'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart_policy: "always"
@@ -11,10 +15,14 @@
   community.docker.docker_container:
     name: plex 
     image: lscr.io/linuxserver/plex:latest
+    env:
+      TZ: Europe/Amsterdam
+      PUID: '1000'
+      PGID: '1000'
     volumes:
       - ~/config/plex:/config
-      - ~/plex/media/tv:/tv
-      - ~/plex/media/movies:/movies 
+      - ~/plex/data/media/tv:/tv
+      - ~/plex/data/media/movies:/movies 
     restart_policy: "always"
     state: started
     ports:
@@ -24,8 +32,14 @@
   community.docker.docker_container:
     name: sonarr 
     image: lscr.io/linuxserver/sonarr:latest
+    env:
+      TZ: Europe/Amsterdam
+      PUID: '1000'
+      PGID: '1000'
+      UMASK: '002'
     volumes:
       - ~/config/sonarr:/config
+      - ~/plex/data:/data
     ports:
       - 8989:8989 
     restart_policy: "always"
@@ -35,8 +49,13 @@
   community.docker.docker_container:
     name: radarr 
     image: lscr.io/linuxserver/radarr:latest
+    env:
+      TZ: Europe/Amsterdam
+      PUID: '1000'
+      PGID: '1000'
     volumes:
       - ~/config/radarr:/config
+      - ~/plex/data:/data
     ports:
       - 7878:7878
     restart_policy: "always"
@@ -61,6 +80,8 @@
     image: lscr.io/linuxserver/ombi:latest
     env:
       TZ: Europe/Amsterdam
+      PUID: '1000'
+      PGID: '1000'
     volumes:
       - ~/config/ombi:/config
     ports:
