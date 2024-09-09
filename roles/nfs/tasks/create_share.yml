@@ -1,6 +1,6 @@
 - name: Create a directory if it does not exist
   ansible.builtin.file:
-    path: "{{ fileshare.path }}" 
+    path: "{{ fileshare.remote_path }}" 
     state: directory
   become: true
   delegate_to: "{{ fileshare.host }}"
@@ -8,7 +8,7 @@
 # NFS runs everything as nobody:nogroup
 - name: Change file ownership, group and permissions
   ansible.builtin.file:
-    path: "{{ fileshare.path }}"
+    path: "{{ fileshare.remote_path }}"
     owner: "{{ host_user | default(nobody) }}"
     group: "{{ host_user | default(nogroup) }}"
     mode: '0766'
@@ -18,8 +18,8 @@
 - name: Add directory to exported
   ansible.builtin.lineinfile:
     path: /etc/exports
-    regexp: '^{{ fileshare.path }} '
-    line: "{{ fileshare.path }}    {{ host_subnet_cidr }}(rw,sync,no_root_squash,no_subtree_check)"
+    regexp: '^{{ fileshare.remote_path }} '
+    line: "{{ fileshare.remote_path }}    {{ host_subnet_cidr }}(rw,sync,no_root_squash,no_subtree_check)"
   become: true
   delegate_to: "{{ fileshare.host }}"
 

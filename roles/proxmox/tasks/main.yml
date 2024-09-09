@@ -29,7 +29,7 @@
 
     - name: Sleep for 30 seconds
       ansible.builtin.wait_for:
-        timeout: 30 
+        timeout: 60 
       when: created_vm.changed
       
     - name: Update hardwarde parameters

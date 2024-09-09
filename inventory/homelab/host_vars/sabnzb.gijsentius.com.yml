@@ -12,7 +12,8 @@ host_remove_failed: true
 host_memory: '4096'
 host_cores: '4'
 host_fileshares:
-  - path: /home/gijs/plex/downloads 
+  - remote_path: /mnt/share/plex/downloads
+    local_path: /home/gijs/plex/downloads
     host: nfs.gijsentius.com
 
 sabnzb_api_key: !vault |

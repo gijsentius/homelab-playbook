@@ -15,7 +15,7 @@ host_disks:
     storage: storage-1
     size: 3072
 
-lvm_vg_name: os
-lvm_lv_name: home
+lvm_vg_name: nfs
+lvm_lv_name: share
 lvm_lv_size: '100%FREE'
-lvm_mount_point: /home 
+lvm_mount_point: /mnt/share 
