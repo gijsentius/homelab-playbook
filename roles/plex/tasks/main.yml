@@ -31,7 +31,7 @@
     restart_policy: "always"
     state: started
 
-- name: start radarr docker container
+- name: Start radarr docker container
   community.docker.docker_container:
     name: radarr 
     image: lscr.io/linuxserver/radarr:latest
