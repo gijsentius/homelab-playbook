@@ -14,6 +14,7 @@ host_password: !vault |
     3831
 host_remove_failed: false
 host_snapshot: false
+host_onboot: true
 
 proxmox:
   nodes:

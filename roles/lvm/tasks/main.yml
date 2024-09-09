@@ -26,6 +26,7 @@
         vg: "{{ lvm_vg_name }}"
         force: no
         state: present
+      register: lvm_disk_added
 
     - name: Create the "{{ lvm_lv_name }}" Logical Volume.
       ansible.builtin.lvol:
@@ -35,6 +36,7 @@
         active: yes
         force: no
         state: present
+      when: lvm_disk_added.changed
 
     - name: Create a "{{ lvm_fs | default('ext4') }}" filesystem on lvm "/dev/mapper/{{ lvm_vg_name}}-{{ lvm_lv_name}}".
       ansible.builtin.filesystem:

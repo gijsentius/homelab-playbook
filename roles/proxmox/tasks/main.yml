@@ -19,6 +19,7 @@
         searchdomains: "{{ host_searchdomains | default(omit) }}"
         timeout: "{{ host_timeout | default(300) }}"
         node: "{{ proxmox_pve_node }}"
+        onboot: "{{ host_onboot }}" 
         full: "{{ host_full_clone | default(false) }}"
         api_user: "{{ proxmox.api.user.full_name }}"
         api_token_id: "{{ proxmox.api.token.id }}"
@@ -27,7 +28,7 @@
         state: present
       register: created_vm
 
-    - name: Sleep for 30 seconds
+    - name: Sleep for 60 seconds
       ansible.builtin.wait_for:
         timeout: 60 
       when: created_vm.changed
@@ -49,6 +50,7 @@
 
     - name: Update drive configuration
       ansible.builtin.import_tasks: add_storage.yml
+      when: host_disks is defined
 
     - name: Configure cloud init parameters
       community.general.proxmox_kvm:
@@ -69,6 +71,7 @@
           ipconfig0: "ip={{ host_ipv4 }}/{{ host_subnet }},gw={{ host_gateway }}" 
         update: true
       when: created_vm.changed
+      register: proxmox_configure_cloud_init
     
     - name: Start VM in proxmox
       community.general.proxmox_kvm:
@@ -109,7 +112,7 @@
       ansible.builtin.shell: "ssh-keyscan -H {{ host_ipv4 }} >> ~/.ssh/known_hosts"
       when: created_vm.changed
   rescue:
-    - name: Stop VM in proxmox
+    - name: Remove VM in proxmox
       community.general.proxmox_kvm:
         name: "{{ host_name }}"
         node: "{{ proxmox_pve_node }}"
@@ -117,9 +120,7 @@
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"
         api_host: "{{ proxmox.api.host }}"
-        force: true
-        state: stopped 
-    
+        state: restarted 
     - name: Remove VM in proxmox
       community.general.proxmox_kvm:
         name: "{{ host_name }}"
