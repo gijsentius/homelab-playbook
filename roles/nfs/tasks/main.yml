@@ -13,11 +13,14 @@
 - name: "Create fileshare folders"
   ansible.builtin.file:
     path: "{{ fileshare.local_path }}" 
-    mode: '0666'
+    mode: '0777'
+    owner: "{{ host_user }}"
+    group: "{{ host_user }}"
     state: directory
   loop: "{{ host_fileshares }}" 
   loop_control:
     loop_var: fileshare
+  become: true
 
 - name: "Write shares in fstab"
   ansible.posix.mount:

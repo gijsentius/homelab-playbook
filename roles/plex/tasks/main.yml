@@ -1,3 +1,15 @@
+- name: Create necessary media directory tv
+  ansible.builtin.file:
+    path: "/home/{{ host_user }}/plex/data/media/tv"
+    mode: '0777'
+    state: directory
+
+- name: Create necessary media directory movies
+  ansible.builtin.file:
+    path: "/home/{{ host_user }}/plex/data/media/movies"
+    mode: '0777'
+    state: directory
+
 - name: Start watchtower docker container
   community.docker.docker_container:
     name: watchtower
@@ -61,18 +73,18 @@
     restart_policy: "always"
     state: started
 
-#- name: start overseerr docker container
-#  community.docker.docker_container:
-#    name: overseerr 
-#    image: sctx/overseerr
-#    env:
-#      TZ: Europe/Amstedam
-#    volumes:
-#      - ~/config/overseerr:/app/config
-#    ports:
-#      - 5055:5055
-#    restart_policy: "always"
-#    state: started
+- name: start overseerr docker container
+  community.docker.docker_container:
+    name: overseerr 
+    image: sctx/overseerr
+    env:
+      TZ: Europe/Amstedam
+    volumes:
+      - ~/config/overseerr:/app/config
+    ports:
+      - 5055:5055
+    restart_policy: "always"
+    state: started
 
 - name: Start ombi docker container
   community.docker.docker_container:
