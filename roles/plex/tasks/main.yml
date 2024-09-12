@@ -26,16 +26,17 @@
 - name: Start Plex Docker container
   community.docker.docker_container:
     name: plex 
-    image: lscr.io/linuxserver/plex:latest
+    image: ghcr.io/hotio/plex
     env:
       TZ: Europe/Amsterdam
       PUID: '1000'
       PGID: '1000'
+      umask: '002'
     volumes:
-      - ~/config/plex:/config
-      - ~/plex/data/media/tv:/tv
-      - ~/plex/data/media/movies:/movies 
-    restart_policy: "always"
+      - "/home/{{ host_user }}/config/plex:/config"
+      - "/home/{{ host_user }}/plex/data/media/tv:/tv"
+      - "/home/{{ host_user }}/plex/data/media/movies:/movies" 
+    restart_policy: "unless-stopped"
     state: started
     ports:
       - 32400:32400
