@@ -15,6 +15,10 @@ caddy_servers:
     host: plex.gijsentius.com
     port: 5055
     protocol: http
+  - server: prowlarr.gijsentius.com
+    host: plex.gijsentius.com
+    port: 9696
+    protocol: http
   - server: ombi.gijsentius.com
     host: plex.gijsentius.com
     port: 3579

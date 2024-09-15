@@ -87,17 +87,17 @@
     restart_policy: "always"
     state: started
 
-- name: Start ombi docker container
+- name: Start prowlarr docker container
   community.docker.docker_container:
-    name: ombi
-    image: lscr.io/linuxserver/ombi:latest
+    name: prowlarr 
+    image: lscr.io/linuxserver/prowlarr:latest
     env:
       TZ: Europe/Amsterdam
       PUID: '1000'
       PGID: '1000'
     volumes:
-      - ~/config/ombi:/config
+      - ~/config/prowlarr:/config
     ports:
-      - 3579:3579
-    restart_policy: "always"
+      - 9696:9696 
+    restart_policy: "unless-stopped"
     state: started

@@ -27,6 +27,8 @@
       OPENVPN_USER: "{{ openvpn_user }}"
       OPENVPN_PASSWORD: "{{ openvpn_password }}"
       VPN_SERVICE_PROVIDER: 'nordvpn'
+    devices:
+      - /dev/net/tun:/dev/net/tun
     capabilities:
       - 'NET_ADMIN'
     ports:
