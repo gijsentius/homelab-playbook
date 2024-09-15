@@ -12,6 +12,13 @@
     - role: proxmox 
       delegate_to: localhost
 
+- name: Setup VM in proxmox for qbittorrent 
+  hosts: qbittorrent
+  gather_facts: false
+  roles:
+    - role: proxmox 
+      delegate_to: localhost
+
 - hosts: plex
   gather_facts: true
   roles:
@@ -24,3 +31,10 @@
   roles:
     - role: common
     - role: sabnzb
+
+- hosts: qbittorrent 
+  gather_facts: true
+  roles:
+    - role: common
+    - role: docker
+    - role: qbittorent 

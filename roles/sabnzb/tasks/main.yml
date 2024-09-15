@@ -39,14 +39,6 @@
       become: false
       register: sabnzbd_ini_template
 
-    # - name: Add host to whitelist
-    #   ansible.builtin.lineinfile:
-    #     path: "/home/{{ host_user }}/.sabnzbd/sabnzbd.ini"
-    #     line: "host_whitelist = {{ host_name }}.{{ host_zone }}" 
-    #     regex: "^host_whitelist = .*$"
-    #     backref: true
-    #   register: sabnzb_add_host_to_whitelist
-
     - name: Restart sabnzb service
       ansible.builtin.systemd_service:
         name: sabnzbdplus
