@@ -1,0 +1,4 @@
+- hosts: caddy 
+  gather_facts: true
+  roles:
+    - role: caddy

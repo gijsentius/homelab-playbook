@@ -48,7 +48,7 @@
       PGID: '1000'
       umask: '002'
     volumes:
-      - "/home/{{ host_user }}/config/plex:/config"
+      - "/home/{{ host_user }}/config/qbittorrent:/config"
       - "/home/{{ host_user }}/plex/data/torrents:/data"
     restart_policy: "unless-stopped"
     network_mode: container:gluetun
