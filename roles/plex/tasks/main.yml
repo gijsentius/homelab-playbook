@@ -50,11 +50,12 @@
       PUID: '1000'
       PGID: '1000'
       UMASK: '002'
+    network_mode: host
     volumes:
       - ~/config/sonarr:/config
       - ~/plex/data:/data
-    ports:
-      - 8989:8989 
+    # ports:
+    #   - 8989:8989 
     restart_policy: "always"
     state: started
 
@@ -66,11 +67,12 @@
       TZ: Europe/Amsterdam
       PUID: '1000'
       PGID: '1000'
+    network_mode: host
     volumes:
       - ~/config/radarr:/config
       - ~/plex/data:/data
-    ports:
-      - 7878:7878
+    # ports:
+    #   - 7878:7878
     restart_policy: "always"
     state: started
 
@@ -87,6 +89,18 @@
     restart_policy: "always"
     state: started
 
+- name: Start flaresolverr docker container
+  community.docker.docker_container:
+    name: flaresolverr
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    env:
+      LOG_LEVEL: 'info'
+    network_mode: host 
+    ports:
+      - 8191:8191 
+    restart_policy: "unless-stopped"
+    state: started
+
 - name: Start prowlarr docker container
   community.docker.docker_container:
     name: prowlarr 
@@ -97,7 +111,8 @@
       PGID: '1000'
     volumes:
       - ~/config/prowlarr:/config
-    ports:
-      - 9696:9696 
+    network_mode: host
+    # ports:
+    #   - 9696:9696 
     restart_policy: "unless-stopped"
     state: started

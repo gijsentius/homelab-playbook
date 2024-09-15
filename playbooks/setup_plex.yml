@@ -5,8 +5,8 @@
     - role: proxmox 
       delegate_to: localhost
   tags: 
-    - plex
     - proxmox
+    - plex-setup
 
 - name: Setup VM in proxmox for sabnzb 
   hosts: sabnzb
@@ -15,7 +15,6 @@
     - role: proxmox 
       delegate_to: localhost
   tags: 
-    - sabnzb
     - proxmox
 
 - name: Setup VM in proxmox for qbittorrent 
@@ -25,7 +24,6 @@
     - role: proxmox 
       delegate_to: localhost
   tags: 
-    - qbittorrent
     - proxmox
 
 - hosts: plex
@@ -33,6 +31,11 @@
   roles:
     - role: common
     - role: docker
+  tags: plex-setup
+
+- hosts: plex
+  gather_facts: true
+  roles:
     - role: plex
   tags: plex
 

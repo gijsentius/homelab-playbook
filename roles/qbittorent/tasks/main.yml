@@ -1,6 +1,12 @@
-- name: Create necessary directory 
+- name: Create complete torrent directory 
   ansible.builtin.file:
-    path: "/home/{{ host_user }}/plex/data/torrents"
+    path: "/home/{{ host_user }}/plex/data/torrents/complete"
+    mode: '0777'
+    state: directory
+
+- name: Create incomplete torrent directory 
+  ansible.builtin.file:
+    path: "/home/{{ host_user }}/plex/data/torrents/incomplete"
     mode: '0777'
     state: directory
 
@@ -56,7 +62,7 @@
       umask: '002'
     volumes:
       - "/home/{{ host_user }}/config/qbittorrent:/config"
-      - "/home/{{ host_user }}/plex/data/torrents:/data"
+      - "/home/{{ host_user }}/plex/data/torrents:/data/torrents/"
     restart_policy: "unless-stopped"
     network_mode: container:gluetun
     state: started
