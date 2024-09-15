@@ -38,6 +38,13 @@
     restart_policy: "unless-stopped"
     state: started
 
+- name: Configure sabnzb
+  ansible.builtin.template:
+    src: qBittorrent.conf.j2
+    dest: "/home/{{ host_user }}/config/qbittorrent/config/qBittorrent.conf"
+  become_user: "{{ host_user }}" 
+  become: false
+
 - name: Start Qbittorrent Docker container
   community.docker.docker_container:
     name: qbittorrent 
