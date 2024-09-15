@@ -24,8 +24,8 @@
     env:
       TZ: Europe/Amsterdam
       SERVER_COUNTRIES: 'Netherlands'
-      VPN_TYPE: 'wireguard'
-      WIREGUARD_PRIVATE_KEY: "{{ nordvpn_wireguard_key }}"
+      OPENVPN_USER: "{{ openvpn_user }}"
+      OPENVPN_PASSWORD: "{{ openvpn_password }}"
       VPN_SERVICE_PROVIDER: 'nordvpn'
     capabilities:
       - 'NET_ADMIN'
