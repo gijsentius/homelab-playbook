@@ -1,13 +1,18 @@
 {% for caddy_server in caddy_servers %}
 {{ caddy_server.server }} {
-{% if caddy_server.protocol == 'https' and caddy_server.self_signed %}
-    reverse_proxy {{ caddy_server.protocol }}://{{ caddy_server.host }}:{{ caddy_server.port }} {
+{% if caddy_server.protocol == 'https' %}
+    reverse_proxy {% for caddy_host in caddy_server.hosts -%}https://{{ caddy_host }}:{{ caddy_server.port }} {% endfor %} {
         transport http {
+{% if 'self_signed' in caddy_server and caddy_server.self_signed %}
             tls_insecure_skip_verify
+{% else %}
+            tls
+{% endif %}
         }
     }
 {% else %}
-    reverse_proxy {{ caddy_server.protocol }}://{{ caddy_server.host }}:{{ caddy_server.port }}
+    reverse_proxy {% for caddy_host in caddy_server.hosts -%}{{ caddy_server.protocol }}://{{ caddy_host }}:{{ caddy_server.port }}
+{% endfor %}
 {% endif %}
 }
 {% endfor %}

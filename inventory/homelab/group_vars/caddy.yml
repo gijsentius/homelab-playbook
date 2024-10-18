@@ -1,38 +1,46 @@
 caddy_servers:
+  - server: rancher.gijsentius.com
+    hosts:
+      - "rancher-server-1.gijsentius.com"
+      - "rancher-agent-1.gijsentius.com"
+      - "rancher-agent-2.gijsentius.com"
+      - "rancher-agent-3.gijsentius.com"
+    port: 443
+    protocol: https
   - server: plex.gijsentius.com
-    host: plex.gijsentius.com
+    hosts: [plex.gijsentius.com]
     port: 32400
     protocol: http
   - server: sonarr.gijsentius.com
-    host: plex.gijsentius.com
+    hosts: [plex.gijsentius.com]
     port: 8989
     protocol: http
   - server: radarr.gijsentius.com
-    host: plex.gijsentius.com
+    hosts: [plex.gijsentius.com]
     port: 7878
     protocol: http
   - server: overseerr.gijsentius.com
-    host: plex.gijsentius.com
+    hosts: [plex.gijsentius.com]
     port: 5055
     protocol: http
   - server: prowlarr.gijsentius.com
-    host: plex.gijsentius.com
+    hosts: [plex.gijsentius.com]
     port: 9696
     protocol: http
   - server: sabnzb.gijsentius.com
-    host: sabnzb.gijsentius.com
+    hosts: [sabnzb.gijsentius.com]
     port: 8080
     protocol: http
   - server: qbittorrent.gijsentius.com
-    host: qbittorrent.gijsentius.com
+    hosts: [qbittorrent.gijsentius.com]
     port: 8080
     protocol: http
   - server: dc.gijsentius.com
-    host: 192.168.178.69
+    hosts: [192.168.178.69]
     port: 8006
     protocol: https
     self_signed: true
   - server: vault.gijsentius.com
-    host: vault.gijsentius.com
+    hosts: [vault.gijsentius.com]
     port: 8080
     protocol: http

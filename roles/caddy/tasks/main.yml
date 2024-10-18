@@ -10,11 +10,6 @@
         pkg: caddy
         state: present
 
-    - name: Start caddy service
-      ansible.builtin.systemd_service:
-        name: caddy
-        state: started
-
     - name: Write caddy config
       ansible.builtin.template:
         src: Caddyfile.j2
@@ -27,4 +22,9 @@
         name: caddy
         state: restarted
       when: caddy_config_template_output.changed 
+    
+    - name: Start caddy service
+      ansible.builtin.systemd_service:
+        name: caddy
+        state: started
   become: true
