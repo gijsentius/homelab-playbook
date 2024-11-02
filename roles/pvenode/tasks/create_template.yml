@@ -13,7 +13,7 @@
         api_user: "{{ proxmox.api.user.full_name }}"
         api_token_id: "{{ proxmox.api.token.id | default('ansible') }}"
         api_token_secret: "{{ proxmox.api.token.secret | default(pve_created_token) }}"
-        api_host: "{{ proxmox.api.host }}"
+        api_host: "{{ inventory_hostname }}"
       register: template_info
 
     - name: Download cloud image & rename to qcow2
@@ -37,9 +37,13 @@
       ansible.builtin.command: >
         qemu-img resize "~/{{ template.name }}.qcow2" 20G
 
+    - name: Set VM ID by combining offset with id
+      ansible.builtin.set_fact:
+        template_id: "{{ template_id_offset + template.id }}"
+
     - name: Create an empty VM
       ansible.builtin.command: >
-        qm create {{ template.id }} 
+        qm create {{ template_id }} 
           --name {{ template.name }} 
           --memory {{ template.memory | default(1024) }} 
           --net0 virtio,bridge={{ template.bridge | default('vmbr0') }}
@@ -47,47 +51,49 @@
 
     - name: Import the disk image in the local Proxmox storage
       ansible.builtin.command: >
-          qm importdisk {{ template.id }} ~/{{ template.name }}.qcow2 local-lvm
+          qm importdisk {{ template_id }} ~/{{ template.name }}.qcow2 local-lvm
       when: not (template_info.proxmox_vms | length)
 
     - name: Configure VM to use the uploaded image
       ansible.builtin.command: >
-          qm set {{ template.id }}
+          qm set {{  template_id }}
             --scsihw virtio-scsi-pci 
-            --scsi0 local-lvm:vm-{{ template.id }}-disk-0
+            --scsi0 local-lvm:vm-{{ template_id }}-disk-0
       when: not (template_info.proxmox_vms | length)
 
     - name: Adding the image as CD-Rom to VM
       ansible.builtin.command: >
-          qm set {{ template.id }} --ide2 local-lvm:cloudinit
+          qm set {{ template_id }} --ide2 local-lvm:cloudinit
       when: not (template_info.proxmox_vms | length)
 
     - name: Force VM to boot from image
       ansible.builtin.command: >
-          qm set {{ template.id }} --boot c --bootdisk scsi0
+          qm set {{ template_id }} --boot c --bootdisk scsi0
       when: not (template_info.proxmox_vms | length)
 
     - name: Attach serial console
       ansible.builtin.command: >
-          qm set {{ template.id }} --serial0 socket --vga serial0
+          qm set {{ template_id }} --serial0 socket --vga serial0
       when: not (template_info.proxmox_vms | length)
 
     - name: "Create template {{ template.name }}"
       community.general.proxmox_kvm:
         name: "{{ template.name }}"
+        vmid: "{{ template_id }}"
         node: "{{ host_node }}"
         api_user: "{{ proxmox.api.user.full_name }}"
         api_token_id: "{{ proxmox.api.token.id | default(ansible) }}"
         api_token_secret: "{{ proxmox.api.token.secret | default(pve_created_token) }}"
-        api_host: "{{ proxmox.api.host }}"
+        api_host: "{{ inventory_hostname }}"
         state: template
   rescue:
     - name: Remove unfinished template
       community.general.proxmox_kvm:
         name: "{{ template.name }}"
+        vmid: "{{ template_id }}"
         node: "{{ host_node }}"
-        api_user: "{{ proxmox.api.user.name }}"
+        api_user: "{{ proxmox.api.user.full_name }}"
         api_token_id: "{{ proxmox.api.token.id | default('ansible') }}"
         api_token_secret: "{{ proxmox.api.token.secret | default(pve_created_token) }}"
-        api_host: "{{ proxmox.api.host }}"
+        api_host: "{{ inventory_hostname }}"
         state: absent

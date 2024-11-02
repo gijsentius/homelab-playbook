@@ -45,7 +45,7 @@
         api_user: "{{ proxmox.api.user.full_name }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"
-        api_host: "{{ proxmox.api.host }}"
+        api_host: "{{ inventory_hostname }}"
         state: absent
       when: template_image_checksum != template_image_checksum 
   when: template.checksums is defined

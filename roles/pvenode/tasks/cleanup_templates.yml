@@ -5,7 +5,7 @@
     api_user: "{{ proxmox.api.user.full_name }}"
     api_token_id: "{{ proxmox.api.token.id }}"
     api_token_secret: "{{ proxmox.api.token.secret }}"
-    api_host: "{{ proxmox.api.host }}"
+    api_host: "{{ inventory_hostname }}"
   register: template_info
 
 # TODO clean templates not defined

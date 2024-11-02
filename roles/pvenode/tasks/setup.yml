@@ -5,6 +5,7 @@
       - python3-proxmoxer
       - python3-pip
       - jq
+      - libguestfs-tools
     update_cache: false
 
 - name: Create user {{ proxmox.api.user.name }}
@@ -15,7 +16,7 @@
 - name: Add Ansible ssh key
   ansible.builtin.authorized_key:
     user: "{{ proxmox.api.user.name }}"
-    key: "{{ lookup('file', '/home/{{ proxmox.api.user.name }}/.ssh/{{ proxmox.api.user.pub_key }}') }}" 
+    key: "{{ lookup('file', '~/.ssh/{{ proxmox.api.user.pub_key }}') }}" 
 
 - name: Add {{ proxmox.api.user.name }} to sudo
   ansible.builtin.user:
@@ -76,3 +77,4 @@
   ansible.builtin.debug:
     msg: "{{ pve_created_token }}"
   when: pve_token_id not in pve_existing_tokens 
+

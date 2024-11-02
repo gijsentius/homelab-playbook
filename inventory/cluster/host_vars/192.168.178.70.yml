@@ -1,1 +1,2 @@
 host_node: pve2
+template_id_offset: 80000

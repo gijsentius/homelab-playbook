@@ -3,6 +3,9 @@
   become: true
   become_user: root
 
+- meta: end_play
+  when: pve_token_id not in pve_existing_tokens 
+
 # Update template removes a template when it has a newer image available
 - ansible.builtin.include_tasks: update_template.yml
   args:
