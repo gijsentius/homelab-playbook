@@ -2,7 +2,7 @@
   block:
     - name: Choose pve node
       ansible.builtin.set_fact:
-        proxmox_pve_node: "{{ proxmox.nodes | random }}" 
+        proxmox_pve_node: "{{ host_node | default(proxmox.nodes | random) }}" 
     
     # TODO autodiscover the pve node when the vm already exists
 
@@ -21,6 +21,7 @@
         node: "{{ proxmox_pve_node }}"
         onboot: "{{ host_onboot }}" 
         full: "{{ host_full_clone | default(false) }}"
+        vmid: "{{ host_vmid | default(omit) }}"
         api_user: "{{ proxmox.api.user.full_name }}"
         api_token_id: "{{ proxmox.api.token.id }}"
         api_token_secret: "{{ proxmox.api.token.secret }}"
@@ -44,6 +45,7 @@
         api_host: "{{ proxmox.api.host }}"
         memory: "{{ host_memory | default('4096') }}"
         cores: "{{ host_cores | default('2') }}"
+        kvm: "{{ kvm_hardware_virt | default(omit) }}"
         update: true
       ignore_errors: true
       register: proxmox_hardware_update

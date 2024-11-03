@@ -3,6 +3,7 @@
   roles:
     - role: proxmox
       delegate_to: localhost
+      connection: local
 
 - hosts: powerdns
   gather_facts: true

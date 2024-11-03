@@ -16,6 +16,8 @@ host_remove_failed: false
 host_snapshot: false
 host_onboot: true
 
+kvm_hardware_virt: false
+
 proxmox:
   nodes: 
     - pve1
