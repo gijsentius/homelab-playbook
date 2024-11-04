@@ -4,7 +4,7 @@ webserver-allow-from={{ host_subnet_cidr }}
 webserver-port={{ powerdns.server.port | default(8081) }}
 webserver-address=0.0.0.0
 local-port=54
-default-soa-name={{ host_zone }}
+#default-soa-name={{ host_zone }}
 
 api=yes
 api-key={{ powerdns.api.key }}
