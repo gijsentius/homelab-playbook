@@ -1,0 +1,18 @@
+- name: Setup VM in proxmox for minecraft
+  hosts: minecraft
+  gather_facts: false
+  roles:
+    - role: proxmox 
+      delegate_to: localhost
+
+- name: Start minecraft on VM inside docker container
+  hosts: minecraft
+  gather_facts: true
+  tasks:
+    - name: Setup docker on newly created VM
+      include_role:
+        name: docker
+    - name: Configure and run Minecraft
+      include_role:
+        name: minecraft
+

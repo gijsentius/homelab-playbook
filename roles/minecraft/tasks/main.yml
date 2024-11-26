@@ -1,0 +1,19 @@
+- name: Create env file with all necessary variables
+  ansible.builtin.template:
+    src: mc.env.j2
+    dest: /home/{{ lookup('env', 'USER') }}/mc.env
+
+- name: Start minecraft in Docker container
+  community.docker.docker_container:
+    name: minecraft
+    image: itzg/minecraft-server:latest
+    volumes:
+      - "/home/{{ lookup('env', 'USER') }}/mc-data/:/data/"
+    ports:
+      - "25565:25565"
+    env_file: "/home/{{ lookup('env', 'USER') }}/mc.env"
+    env:
+      TYPE: FABRIC
+      EULA: TRUE
+    restart_policy: "always"
+    state: started
