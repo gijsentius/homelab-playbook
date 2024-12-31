@@ -10,3 +10,6 @@
   include_role:
     name: nfs
   when: host_fileshares is defined
+
+- name: Configure tailscale for {{ inventory_hostname }}
+  
