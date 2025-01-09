@@ -1,3 +1,5 @@
 collections:
   - name: community.general
-  - name: 
+  - name: https://github.com/gijsentius/homelab-collection.git
+    type: git
+    version: main

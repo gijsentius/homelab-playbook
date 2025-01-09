@@ -6,10 +6,10 @@
       delegate_to: localhost
 
 - name: Run common tasks
-  hosts: filestore
+  hosts: vault
   gather_facts: true
   roles:
-    - common
+    - gijsentius.homelab.common
 
 - name: Start vaultwarden on VM inside docker container
   hosts: vault

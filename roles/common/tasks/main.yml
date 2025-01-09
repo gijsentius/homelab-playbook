@@ -12,4 +12,7 @@
   when: host_fileshares is defined
 
 - name: Configure tailscale for {{ inventory_hostname }}
-  
+  include_role:
+    name: gijsentius.homelab.tailscale
+  when: tailscale_auth_key
+
