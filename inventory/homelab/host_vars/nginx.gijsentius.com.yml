@@ -1,8 +1,8 @@
-host_vm_id: 1000 
-host_name: caddy
+host_vm_id: 8080
+host_name: nginx
 host_zone: gijsentius.com
 host_gateway: 192.168.178.1
-host_ipv4: 192.168.178.80
+host_ipv4: 192.168.178.81
 host_nameservers:
   - 192.168.178.53
 host_subnet: 24
@@ -10,3 +10,8 @@ host_subnet_cidr: '192.168.178.0/24'
 host_memory: '1024'
 host_cores: '1'
 host_clone: debian-12-bookworm-cloudinit-template
+
+nginx_applications:
+  - name: qbittorrent
+    host: qbittorrent
+    port: 8080

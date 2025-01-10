@@ -1,0 +1,7 @@
+host_vm_id: 9999
+host_name: test
+host_gateway: 192.168.178.1
+host_memory: '2048'
+host_cores: '2'
+host_clone: debian-12-bookworm-cloudinit-template
+

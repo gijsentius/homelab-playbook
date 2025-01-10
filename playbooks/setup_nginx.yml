@@ -1,0 +1,12 @@
+- name: Setup VM in proxmox for nginx 
+  hosts: nginx 
+  gather_facts: false
+  roles:
+    - role: gijsentius.homelab.proxmox 
+      delegate_to: localhost
+
+- hosts: nginx 
+  gather_facts: true
+  roles:
+    - role: gijsentius.homelab.common
+    - role: gijsentius.homelab.nginx 

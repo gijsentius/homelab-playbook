@@ -29,3 +29,9 @@ rancher-server-1.gijsentius.com
 rancher-agent-1.gijsentius.com
 rancher-agent-2.gijsentius.com
 rancher-agent-3.gijsentius.com
+
+[nginx]
+nginx.gijsentius.com
+
+[test]
+test
