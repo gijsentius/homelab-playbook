@@ -3,6 +3,7 @@ localhost_public_key: id_ed25519.pub
 host_ssh_keys: |
   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNNsu8By+Wc3ai8QNp0wipEM5SKvLC09nONPZu2wxZ gijs@gijs-Standard-PC-i440FX-PIIX-1996
   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPFEzpT1ChTKTFb7mhVOfkEnNREX2Z/oOMuSpxU+QGz g.m.entius@gmail.com
+  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEOUv0jBVMEYD0/GG9LyKtFdieW6Qde4eumF+SixB92M g.m.entius@gmail.com
 host_ssh_key_name: id_rsa
 host_user: gijs
 host_password: !vault |
