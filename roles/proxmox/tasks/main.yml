@@ -87,10 +87,6 @@
         state: started
       register: proxmox_vm_started
 
-    - name: Take a snapshot of the vm
-      ansible.builtin.import_tasks: add_snapshot.yml
-      when: host_snapshot
-
     - name: Register hostname at DNS server
       ansible.builtin.include_role:
         name: powerdns
@@ -114,7 +110,7 @@
       ansible.builtin.shell: "ssh-keyscan -H {{ host_ipv4 }} >> ~/.ssh/known_hosts"
       when: created_vm.changed
   rescue:
-    - name: Remove VM in proxmox
+    - name: Restart VM in proxmox
       community.general.proxmox_kvm:
         name: "{{ host_name }}"
         node: "{{ proxmox_pve_node }}"
@@ -123,6 +119,8 @@
         api_token_secret: "{{ proxmox.api.token.secret }}"
         api_host: "{{ proxmox.api.host }}"
         state: restarted 
+      when: not host_remove_failed
+    
     - name: Remove VM in proxmox
       community.general.proxmox_kvm:
         name: "{{ host_name }}"

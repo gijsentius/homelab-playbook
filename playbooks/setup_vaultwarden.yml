@@ -2,7 +2,7 @@
   hosts: vault 
   gather_facts: false
   roles:
-    - role: proxmox 
+    - role: gijsentius.homelab.proxmox 
       delegate_to: localhost
 
 - name: Run common tasks
@@ -15,8 +15,14 @@
   hosts: vault
   gather_facts: true
   tasks:
+    - name: Create snapshot of VM
+      ansible.builtin.include_role:
+        name: gijsentius.homelab.proxmox
+        tasks_from: add_snapshot.yml
+      when: host_snapshot
+    
     - name: Setup docker on newly created VM
-      include_role:
+      ansible.builtin.include_role:
         name: docker
 
     - name: Start vaultwarden in Docker container
