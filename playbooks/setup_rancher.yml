@@ -2,26 +2,26 @@
   hosts: rancher_server
   gather_facts: false
   roles:
-    - role: proxmox
+    - role: gijsentius.homelab.proxmox
       delegate_to: localhost
       connection: local
 
 - name: Setup rancher servers
   hosts: rancher_server
   roles:
-    - role: common
-    - role: rancher 
+    - role: gijsentius.homelab.common
+    - role: gijsentius.homelab.rancher 
 
 - name: Setup VM in proxmox for rancher agents 
   hosts: rancher_agent
   gather_facts: false
   roles:
-    - role: proxmox
+    - role: gijsentius.homelab.proxmox
       delegate_to: localhost
       connection: local
 
 - name: Setup rancher agents 
   hosts: rancher_agent
   roles:
-    - role: common
-    - role: rancher 
+    - role: gijsentius.homelab.common
+    - role: gijsentius.homelab.rancher 

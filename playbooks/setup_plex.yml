@@ -2,7 +2,7 @@
   hosts: plex
   gather_facts: false
   roles:
-    - role: proxmox 
+    - role: gijsentius.homelab.proxmox 
       delegate_to: localhost
   tags: 
     - proxmox
@@ -12,7 +12,7 @@
   hosts: sabnzb
   gather_facts: false
   roles:
-    - role: proxmox 
+    - role: gijsentius.homelab.proxmox 
       delegate_to: localhost
   tags: 
     - proxmox
@@ -21,7 +21,7 @@
   hosts: qbittorrent
   gather_facts: false
   roles:
-    - role: proxmox 
+    - role: gijsentius.homelab.proxmox 
       delegate_to: localhost
   tags: 
     - proxmox
@@ -29,27 +29,27 @@
 - hosts: plex
   gather_facts: true
   roles:
-    - role: common
-    - role: docker
+    - role: gijsentius.homelab.common
+    - role: gijsentius.homelab.docker
   tags: plex-setup
 
 - hosts: plex
   gather_facts: true
   roles:
-    - role: plex
+    - role: gijsentius.homelab.plex
   tags: plex
 
 - hosts: sabnzb
   gather_facts: true
   roles:
-    - role: common
-    - role: sabnzb
+    - role: gijsentius.homelab.common
+    - role: gijsentius.homelab.sabnzb
   tags: sabnzb
 
 - hosts: qbittorrent 
   gather_facts: true
   roles:
-    - role: common
-    - role: docker
-    - role: qbittorent 
+    - role: gijsentius.homelab.common
+    - role: gijsentius.homelab.docker
+    - role: gijsentius.homelab.qbittorrent 
   tags: qbittorrent
