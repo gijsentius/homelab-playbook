@@ -25,3 +25,13 @@
   roles:
     - role: gijsentius.homelab.common
     - role: gijsentius.homelab.rancher 
+
+- name: Install essentials rancher components
+  hosts: rancher_server
+  gather_facts: true
+  tasks:
+    - name: Install automatic cluster upgrades
+      ansible.builtin.include_role:
+        name: gijsentius.homelab.rancher
+        tasks_from: install_system-upgrade-controller.yml
+
