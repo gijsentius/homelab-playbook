@@ -27,14 +27,14 @@ caddy_servers:
     hosts: [plex.gijsentius.com]
     port: 9696
     protocol: http
-  - server: sabnzb.gijsentius.com
-    hosts: [sabnzb.gijsentius.com]
-    port: 8080
-    protocol: http
-  - server: qbittorrent.gijsentius.com
-    hosts: [qbittorrent.gijsentius.com]
-    port: 8080
-    protocol: http
+      # - server: sabnzb.gijsentius.com
+      #   hosts: [sabnzb.gijsentius.com]
+      #   port: 8080
+      #   protocol: http
+      # - server: qbittorrent.gijsentius.com
+      #   hosts: [qbittorrent.gijsentius.com]
+      #   port: 8080
+      #   protocol: http
   - server: dc.gijsentius.com
     hosts: [192.168.178.69]
     port: 8006

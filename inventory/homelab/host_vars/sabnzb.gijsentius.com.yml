@@ -15,6 +15,7 @@ host_fileshares:
     local_path: /data
     host: nfs.gijsentius.com
 
+sabnzb_whitelist: nginx
 sabnzb_api_key: !vault |
     $ANSIBLE_VAULT;1.1;AES256
     65363061363738656538303561393161623831633935636361353836656531383061623730366431

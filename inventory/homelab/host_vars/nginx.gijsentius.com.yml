@@ -15,3 +15,7 @@ nginx_applications:
   - name: qbittorrent
     host: qbittorrent
     port: 8080
+  - name: sabnzb
+    host: sabnzb
+    port: 8080
+
