@@ -16,6 +16,7 @@ host_password: !vault |
 host_remove_failed: false
 host_snapshot: false
 host_onboot: true
+host_auto_updates: true
 
 proxmox:
   nodes:

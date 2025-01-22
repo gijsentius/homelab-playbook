@@ -36,4 +36,16 @@
         restart_policy: "always"
         state: started
 
+    - name: Start watchtower docker container
+      community.docker.docker_container:
+        name: watchtower
+        image: containrrr/watchtower:latest
+        env:
+          TZ: Europe/Amsterdam
+          PUID: '1000'
+          PGID: '1000'
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        restart_policy: "always"
+        state: started
 
