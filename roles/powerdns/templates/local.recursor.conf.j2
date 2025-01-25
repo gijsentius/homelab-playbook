@@ -1,8 +1,0 @@
-webserver=true
-webserver-allow-from={{ host_subnet_cidr }}
-webserver-port={{ powerdns.recursor.port | default(8082) }}
-webserver-address=0.0.0.0
-local-address=0.0.0.0:53
-
-api-key={{ dns.api.key }}
-forward-zones={{ powerdns.domain }}=127.0.0.1:54

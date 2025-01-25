@@ -1,4 +1,0 @@
-- name: Download iso image 
-  ansible.builtin.get_url:
-    url: "{{ iso }}" 
-    dest: "/var/lib/vz/template/iso"
