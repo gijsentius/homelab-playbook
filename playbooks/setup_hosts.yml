@@ -1,0 +1,13 @@
+- hosts: proxmox
+  gather_facts: false
+  roles:
+    - role: gijsentius.homelab.proxmox
+      delegate_to: localhost
+      connection: local
+
+- name: Update all hosts
+  hosts: all
+  gather_facts: true
+  roles:
+    - role: gijsentius.homelab.common
+
