@@ -1,34 +1,42 @@
 - name: Setup VM in proxmox for rancher servers
+  tags:
+    - proxmox
   hosts: rancher_server
   gather_facts: false
   roles:
     - role: gijsentius.homelab.proxmox
       delegate_to: localhost
       connection: local
-  when: host_type == "vm"
 
 - name: Setup VM in proxmox for rancher agents 
+  tags:
+    - proxmox
   hosts: rancher_agent
   gather_facts: false
   roles:
     - role: gijsentius.homelab.proxmox
       delegate_to: localhost
       connection: local
-  when: host_type == "vm"
 
 - name: Setup rancher servers
+  tags:
+    - setup
   hosts: rancher_server
   roles:
     - role: gijsentius.homelab.common
     - role: gijsentius.homelab.rancher 
 
 - name: Setup rancher agents 
+  tags:
+    - setup
   hosts: rancher_agent
   roles:
     - role: gijsentius.homelab.common
     - role: gijsentius.homelab.rancher 
 
 - name: Install essentials rancher components
+  tags:
+    - config
   hosts: rancher_server
   gather_facts: true
   tasks:
@@ -36,4 +44,14 @@
       ansible.builtin.include_role:
         name: gijsentius.homelab.rancher
         tasks_from: install_system-upgrade-controller.yml
+
+- name: Bootstrap flux
+  tags:
+    - config
+  hosts: rancher_server
+  gather_facts: true
+  tasks:
+    - ansible.builtin.include_role:
+        name: gijsentius.homelab.kubernetes
+        tasks_from: flux_bootstrap.yml
 
