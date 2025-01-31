@@ -1,3 +1,4 @@
 - hosts: pvenodes
   roles:
-    - role: pvenode
+    - role: gijsentius.homelab.common
+    - role: gijsentius.homelab.pvenode

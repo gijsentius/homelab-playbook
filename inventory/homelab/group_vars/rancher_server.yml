@@ -5,3 +5,5 @@ host_nameservers:
 host_subnet: 24
 host_subnet_cidr: '192.168.178.0/24'
 host_clone: debian-12-bookworm-cloudinit-template
+rancher_cni: cilium
+

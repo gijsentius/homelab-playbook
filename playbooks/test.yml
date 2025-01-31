@@ -1,6 +1,0 @@
-- name: Setup a test VM
-  hosts: test
-  gather_facts: false
-  roles:
-    - role: gijsentius.homelab.proxmox 
-      delegate_to: localhost
