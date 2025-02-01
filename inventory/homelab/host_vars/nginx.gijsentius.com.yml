@@ -11,11 +11,35 @@ host_memory: '1024'
 host_cores: '1'
 host_clone: debian-12-bookworm-cloudinit-template
 
-nginx_applications:
-  - name: qbittorrent
-    host: qbittorrent
-    port: 8080
-  - name: sabnzb
-    host: sabnzb
-    port: 8080
-
+nginx:
+  local:
+    - name: qbittorrent
+      host: qbittorrent
+      port: 8080
+    - name: sabnzb
+      host: sabnzb
+      port: 8080
+  l4:
+    - name: gijsentius.org
+      port: 80
+      servers:
+        rancher-server-1
+        rancher-agent-1
+        rancher-agent-2
+        rancher-agent-3
+    - name: gijsentius.org
+      port: 443
+      servers:
+        rancher-server-1
+        rancher-agent-1
+        rancher-agent-2
+        rancher-agent-3
+  l4:
+    - name: gijsentius.com
+      port: 80
+      servers:
+        caddy
+    - name: gijsentius.com
+      port: 443
+      servers:
+        caddy
