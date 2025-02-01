@@ -20,26 +20,26 @@ nginx:
       host: sabnzb
       port: 8080
   l4:
-    - name: gijsentius.org
+    - hostname: gijsentius.org
       port: 80
       servers:
-        rancher-server-1
-        rancher-agent-1
-        rancher-agent-2
-        rancher-agent-3
-    - name: gijsentius.org
+        - hostname: rancher-server-1
+        - hostname: rancher-agent-1
+        - hostname: rancher-agent-2
+        - hostname: rancher-agent-3
+    - hostname: gijsentius.org
       port: 443
       servers:
-        rancher-server-1
-        rancher-agent-1
-        rancher-agent-2
-        rancher-agent-3
+        - hostname: rancher-server-1
+        - hostname: rancher-agent-1
+        - hostname: rancher-agent-2
+        - hostname: rancher-agent-3
   l4:
-    - name: gijsentius.com
+    - hostname: gijsentius.com
       port: 80
       servers:
-        caddy
-    - name: gijsentius.com
+        - hostname: caddy
+    - hostname: gijsentius.com
       port: 443
       servers:
-        caddy
+        - hostname: caddy
