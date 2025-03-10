@@ -2,15 +2,15 @@
   hosts: nfs  
   gather_facts: false
   roles:
-    - role: proxmox
+    - role: gijsentius.homelab.proxmox
       delegate_to: localhost
 
 - name: Run common tasks
   hosts: nfs
   gather_facts: true
   roles:
-    - common
-    - lvm
+    - gijsentius.homelab.common
+    - gijsentius.homelab.lvm
 
 - name: Setup NFS server
   hosts: nfs 
@@ -18,5 +18,5 @@
   tasks:
     - name: Configure nfs on VM 
       include_role:
-        name: nfs
+        name: gijsentius.homelab.nfs
         tasks_from: server.yml 

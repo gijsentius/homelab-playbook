@@ -23,7 +23,7 @@
     
     - name: Setup docker on newly created VM
       ansible.builtin.include_role:
-        name: docker
+        name: gijsentius.homelab.docker
 
     - name: Start vaultwarden in Docker container
       community.docker.docker_container:

@@ -5,31 +5,31 @@
 192.168.178.53
 
 [plex]
-plex.gijsentius.com
+plex.gijsentius.org
 
 [sabnzb]
-sabnzb.gijsentius.com
+sabnzb.gijsentius.org
 
 [qbittorrent]
-qbittorrent.gijsentius.com
+qbittorrent.gijsentius.org
 
 [nfs]
-nfs.gijsentius.com
+nfs.gijsentius.org
 
 [vault]
-vault.gijsentius.com
+vault.gijsentius.org
 
 [caddy]
-caddy.gijsentius.com
+caddy.gijsentius.org
 
 [rancher_server]
-rancher-server-1.gijsentius.com
+rancher-server-1.gijsentius.org
 
 [rancher_agent]
-rancher-agent-1.gijsentius.com
-rancher-agent-2.gijsentius.com
-rancher-agent-3.gijsentius.com
+rancher-agent-1.gijsentius.org
+rancher-agent-2.gijsentius.org
+rancher-agent-3.gijsentius.org
 
 [nginx]
-nginx.gijsentius.com
+nginx.gijsentius.org
 

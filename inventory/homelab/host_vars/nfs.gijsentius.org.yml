@@ -1,6 +1,6 @@
 host_vm_id: 700
 host_name: nfs 
-host_zone: gijsentius.com
+host_zone: gijsentius.org
 host_gateway: 192.168.178.1
 host_ipv4: 192.168.178.111
 host_nameservers:

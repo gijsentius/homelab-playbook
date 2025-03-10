@@ -1,5 +1,5 @@
 powerdns:
-  domain: gijsentius.com
+  domain: gijsentius.org
   db:
     name: pda
     root:

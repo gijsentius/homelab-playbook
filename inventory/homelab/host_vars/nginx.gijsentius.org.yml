@@ -1,6 +1,6 @@
 host_vm_id: 8080
 host_name: nginx
-host_zone: gijsentius.com
+host_zone: gijsentius.org
 host_gateway: 192.168.178.1
 host_ipv4: 192.168.178.81
 host_nameservers:
@@ -35,11 +35,11 @@ nginx:
         - hostname: rancher-agent-2
         - hostname: rancher-agent-3
   l4:
-    - hostname: gijsentius.com
+    - hostname: gijsentius.org
       port: 80
       servers:
         - hostname: caddy
-    - hostname: gijsentius.com
+    - hostname: gijsentius.org
       port: 443
       servers:
         - hostname: caddy

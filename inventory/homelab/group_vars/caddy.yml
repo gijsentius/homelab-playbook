@@ -1,46 +1,46 @@
 caddy_servers:
-  - server: rancher.gijsentius.com
+  - server: rancher.gijsentius.org
     hosts:
-      - "rancher-server-1.gijsentius.com"
-      - "rancher-agent-1.gijsentius.com"
-      - "rancher-agent-2.gijsentius.com"
-      - "rancher-agent-3.gijsentius.com"
+      - "rancher-server-1.gijsentius.org"
+      - "rancher-agent-1.gijsentius.org"
+      - "rancher-agent-2.gijsentius.org"
+      - "rancher-agent-3.gijsentius.org"
     port: 443
     protocol: https
-  - server: plex.gijsentius.com
-    hosts: [plex.gijsentius.com]
+  - server: plex.gijsentius.org
+    hosts: [plex.gijsentius.org]
     port: 32400
     protocol: http
-  - server: sonarr.gijsentius.com
-    hosts: [plex.gijsentius.com]
+  - server: sonarr.gijsentius.org
+    hosts: [plex.gijsentius.org]
     port: 8989
     protocol: http
-  - server: radarr.gijsentius.com
-    hosts: [plex.gijsentius.com]
+  - server: radarr.gijsentius.org
+    hosts: [plex.gijsentius.org]
     port: 7878
     protocol: http
-  - server: overseerr.gijsentius.com
-    hosts: [plex.gijsentius.com]
+  - server: overseerr.gijsentius.org
+    hosts: [plex.gijsentius.org]
     port: 5055
     protocol: http
-  - server: prowlarr.gijsentius.com
-    hosts: [plex.gijsentius.com]
+  - server: prowlarr.gijsentius.org
+    hosts: [plex.gijsentius.org]
     port: 9696
     protocol: http
-      # - server: sabnzb.gijsentius.com
-      #   hosts: [sabnzb.gijsentius.com]
+      # - server: sabnzb.gijsentius.org
+      #   hosts: [sabnzb.gijsentius.org]
       #   port: 8080
       #   protocol: http
-      # - server: qbittorrent.gijsentius.com
-      #   hosts: [qbittorrent.gijsentius.com]
+      # - server: qbittorrent.gijsentius.org
+      #   hosts: [qbittorrent.gijsentius.org]
       #   port: 8080
       #   protocol: http
-  - server: dc.gijsentius.com
+  - server: dc.gijsentius.org
     hosts: [192.168.178.69]
     port: 8006
     protocol: https
     self_signed: true
-  - server: vault.gijsentius.com
-    hosts: [vault.gijsentius.com]
+  - server: vault.gijsentius.org
+    hosts: [vault.gijsentius.org]
     port: 8080
     protocol: http

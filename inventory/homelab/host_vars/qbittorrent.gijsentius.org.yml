@@ -1,6 +1,6 @@
 host_vm_id: 704
 host_name: qbittorrent 
-host_zone: gijsentius.com
+host_zone: gijsentius.org
 host_gateway: 192.168.178.1
 host_ipv4: 192.168.178.222
 host_nameservers: 
@@ -13,7 +13,7 @@ host_cores: '1'
 host_fileshares:
   - remote_path: /mnt/share/plex/data
     local_path: /home/gijs/plex/data
-    host: nfs.gijsentius.com
+    host: nfs.gijsentius.org
 openvpn_user: !vault |
     $ANSIBLE_VAULT;1.1;AES256
     32313862356661363065333132373333376630336462393365656364643166333566333964366434
