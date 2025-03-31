@@ -19,27 +19,9 @@ nginx:
     - name: sabnzb
       host: sabnzb
       port: 8080
-  l4:
-    - hostname: gijsentius.org
-      port: 80
-      servers:
-        - hostname: rancher-server-1
-        - hostname: rancher-agent-1
-        - hostname: rancher-agent-2
-        - hostname: rancher-agent-3
-    - hostname: gijsentius.org
-      port: 443
-      servers:
-        - hostname: rancher-server-1
-        - hostname: rancher-agent-1
-        - hostname: rancher-agent-2
-        - hostname: rancher-agent-3
-  l4:
-    - hostname: gijsentius.org
-      port: 80
-      servers:
-        - hostname: caddy
-    - hostname: gijsentius.org
-      port: 443
-      servers:
-        - hostname: caddy
+    - name: sonarr
+      host: sonarr 
+      port: 8989
+    - name: radarr
+      host: radarr
+      port: 7878
