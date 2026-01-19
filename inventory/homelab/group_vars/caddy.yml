@@ -27,6 +27,10 @@ caddy_servers:
     hosts: [plex.gijsentius.org]
     port: 9696
     protocol: http
+  - server: audiobooks.gijsentius.org
+    hosts: [audiobooks.gijsentius.org]
+    port: 13378
+    protocol: http
       # - server: sabnzb.gijsentius.org
       #   hosts: [sabnzb.gijsentius.org]
       #   port: 8080

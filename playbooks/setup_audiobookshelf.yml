@@ -1,0 +1,54 @@
+- name: Setup VM in proxmox for audiobookshelf
+  hosts: audiobooks 
+  gather_facts: false
+  roles:
+    - role: gijsentius.homelab.proxmox 
+      delegate_to: localhost
+
+- name: Run common tasks
+  hosts: audiobooks
+  gather_facts: true
+  roles:
+    - gijsentius.homelab.common
+
+- name: Start audiobookshelf on VM inside docker container
+  hosts: audiobooks
+  gather_facts: true
+  tasks:
+    - name: Create snapshot of VM
+      ansible.builtin.include_role:
+        name: gijsentius.homelab.proxmox
+        tasks_from: add_snapshot.yml
+      when: host_snapshot
+    
+    - name: Setup docker on newly created VM
+      ansible.builtin.include_role:
+        name: gijsentius.homelab.docker
+
+    - name: Start audiobookshelf in Docker container
+      community.docker.docker_container:
+        name: audiobookshelf
+        image: ghcr.io/advplyr/audiobookshelf:latest
+        volumes:
+          - "/home/{{ lookup('env', 'USER') }}/vw-data/data:/data/"
+          - "/home/{{ lookup('env', 'USER') }}/vw-data/audiobooks:/audiobooks"
+          - "/home/{{ lookup('env', 'USER') }}/vw-data/podcasts:/podcasts"
+          - "/home/{{ lookup('env', 'USER') }}/vw-data/config:/config"
+          - "/home/{{ lookup('env', 'USER') }}/vw-data/metadata:/metadata"
+        ports:
+          - "13378:80"
+        restart_policy: "always"
+        state: started
+
+    - name: Start watchtower docker container
+      community.docker.docker_container:
+        name: watchtower
+        image: containrrr/watchtower:latest
+        env:
+          TZ: Europe/Amsterdam
+          PUID: '1000'
+          PGID: '1000'
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        restart_policy: "always"
+        state: started

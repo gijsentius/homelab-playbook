@@ -20,8 +20,8 @@ nginx:
       host: sabnzb
       port: 8080
     - name: sonarr
-      host: sonarr 
+      host: plex
       port: 8989
     - name: radarr
-      host: radarr
+      host: plex
       port: 7878
