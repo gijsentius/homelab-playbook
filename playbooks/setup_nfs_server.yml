@@ -11,6 +11,7 @@
   roles:
     - gijsentius.homelab.common
     - gijsentius.homelab.lvm
+    - gijsentius.homelab.docker
 
 - name: Setup NFS server
   hosts: nfs 
@@ -21,30 +22,30 @@
         name: gijsentius.homelab.nfs
         tasks_from: server.yml 
 
-- name: Start syncthing in Docker container
-  community.docker.docker_container:
-    name: syncthing
-    image: lscr.io/linuxserver/syncthing:latest
-    volumes:
-      - "/home/{{ lookup('env', 'USER') }}/syncthing:/config"
-      - "/mnt/share/:/share/"
-    ports:
-      - "8384:8384"
-      - "22000:22000/tcp"
-      - "22000:22000/udp"
-      - "21027:21027/udp"
-    restart_policy: "always"
-    state: started
+    - name: Start syncthing in Docker container
+      community.docker.docker_container:
+        name: syncthing
+        image: lscr.io/linuxserver/syncthing:latest
+        volumes:
+          - "/home/{{ lookup('env', 'USER') }}/syncthing:/config"
+          - "/mnt/share/:/share/"
+        ports:
+          - "8384:8384"
+          - "22000:22000/tcp"
+          - "22000:22000/udp"
+          - "21027:21027/udp"
+        restart_policy: "always"
+        state: started
 
-- name: Start watchtower docker container
-  community.docker.docker_container:
-    name: watchtower
-    image: containrrr/watchtower:latest
-    env:
-      TZ: Europe/Amsterdam
-      PUID: '1000'
-      PGID: '1000'
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart_policy: "always"
-    state: started
+    - name: Start watchtower docker container
+      community.docker.docker_container:
+        name: watchtower
+        image: containrrr/watchtower:latest
+        env:
+          TZ: Europe/Amsterdam
+          PUID: '1000'
+          PGID: '1000'
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        restart_policy: "always"
+        state: started
