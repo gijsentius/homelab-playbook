@@ -25,6 +25,22 @@
       ansible.builtin.include_role:
         name: gijsentius.homelab.docker
 
+    - name: Start syncthig in a Docker container
+      community.docker.docker_container:
+        name: syncthing
+        image: lscr.io/linuxserver/syncthing:latest
+        volumes:
+          - "/home/{{ lookup('env', 'USER') }}/vw-data/audiobooks:/audiobooks"
+          - "/home/{{ lookup('env', 'USER') }}/vw-data/podcasts:/podcasts"
+          - "/home/{{ lookup('env', 'USER') }}/vs-data/config:/config"
+        ports:
+          - "8384:8384"
+          - "22000:22000/tcp"
+          - "22000:22000/udp"
+          - "21027:21027/udp"
+        restart_policy: "always"
+        state: started
+
     - name: Start audiobookshelf in Docker container
       community.docker.docker_container:
         name: audiobookshelf
