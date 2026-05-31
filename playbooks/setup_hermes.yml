@@ -1,0 +1,54 @@
+- name: Setup VM in proxmox for hermes
+  hosts: hermes
+  gather_facts: false
+  roles:
+    - role: gijsentius.homelab.proxmox
+      delegate_to: localhost
+  tags:
+    - proxmox
+    - hermes-setup
+
+- name: Run common tasks
+  hosts: hermes
+  gather_facts: true
+  roles:
+    - gijsentius.homelab.common
+
+- name: Start hermes agent on VM inside docker container
+  hosts: hermes
+  gather_facts: true
+  tasks:
+    - name: Create snapshot of VM
+      ansible.builtin.include_role:
+        name: gijsentius.homelab.proxmox
+        tasks_from: add_snapshot.yml
+      when: host_snapshot
+
+    - name: Setup docker on newly created VM
+      ansible.builtin.include_role:
+        name: gijsentius.homelab.docker
+
+    - name: Start hermes agent in Docker container
+      community.docker.docker_container:
+        name: hermes
+        image: nousresearch/hermes-agent
+        command: gateway run
+        volumes:
+          - "/home/{{ lookup('env', 'USER') }}/.hermes:/opt/data"
+        ports:
+          - "8642:8642"
+        restart_policy: "unless-stopped"
+        state: started
+
+    - name: Start watchtower docker container
+      community.docker.docker_container:
+        name: watchtower
+        image: containrrr/watchtower:latest
+        env:
+          TZ: Europe/Amsterdam
+          PUID: '1000'
+          PGID: '1000'
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        restart_policy: "always"
+        state: started

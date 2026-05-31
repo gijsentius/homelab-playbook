@@ -1,0 +1,13 @@
+host_vm_id: 706
+host_name: hermes
+host_zone: gijsentius.org
+host_gateway: 192.168.178.1
+host_ipv4: 192.168.178.225
+host_nameservers:
+  - 192.168.178.53
+host_subnet: 24
+host_subnet_cidr: "192.168.178.0/24"
+host_clone: ubuntu-2404-cloudinit-template
+host_memory: "2048"
+host_cores: "2"
+host_snapshot: false
