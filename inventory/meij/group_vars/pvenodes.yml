@@ -1,0 +1,5 @@
+pvenode_templates:
+  - id: 1000
+    name: ubuntu-2404-cloudinit-template
+    checksums: https://cloud-images.ubuntu.com/noble/current/SHA256SUMS
+    image_url: https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img

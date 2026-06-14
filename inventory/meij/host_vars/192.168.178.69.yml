@@ -1,0 +1,4 @@
+host_node: pve
+
+pvenode:
+  user: gijs

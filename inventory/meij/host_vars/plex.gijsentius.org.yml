@@ -1,0 +1,16 @@
+host_vm_id: 701
+host_name: plex
+host_zone: gijsentius.org
+host_gateway: 192.168.178.1
+host_ipv4: 192.168.178.220
+host_nameservers: 
+  - 192.168.178.53
+host_subnet: 24
+host_subnet_cidr: '192.168.178.0/24'
+host_clone: ubuntu-2404-cloudinit-template
+host_memory: '8192'
+host_cores: '4'
+host_fileshares:
+  - remote_path: /mnt/share/plex/data
+    local_path: /home/gijs/plex/data
+    host: nfs.gijsentius.org

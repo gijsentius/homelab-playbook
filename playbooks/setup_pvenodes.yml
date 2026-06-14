@@ -1,4 +1,4 @@
 - hosts: pvenodes
+  remote_user: root
   roles:
-    - role: gijsentius.homelab.common
     - role: gijsentius.homelab.pvenode

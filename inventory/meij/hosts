@@ -1,0 +1,11 @@
+[pvenodes]
+192.168.178.69
+
+[plex]
+plex.gijsentius.org
+
+[sabnzb]
+sabnzb.gijsentius.org
+
+[qbittorrent]
+qbittorrent.gijsentius.org
