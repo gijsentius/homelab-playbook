@@ -7,3 +7,4 @@
 # From now on the order does not really matter
 - import_playbook: playbooks/setup_vaultwarden.yml
 - import_playbook: playbooks/setup_nfs_server.yml
+- import_playbook: playbooks/setup_vikunja.yml

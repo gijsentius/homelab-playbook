@@ -7,3 +7,5 @@ filter_plugins/__pycache__/*
 
 # Rancher files
 .rancher.yml.swp
+
+.claude/

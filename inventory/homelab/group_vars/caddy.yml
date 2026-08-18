@@ -39,6 +39,10 @@ caddy_servers:
       #   hosts: [qbittorrent.gijsentius.org]
       #   port: 8080
       #   protocol: http
+  - server: vikunja.gijsentius.org
+    hosts: [vikunja.gijsentius.org]
+    port: 3456
+    protocol: http
   - server: dc.gijsentius.org
     hosts: [192.168.178.69]
     port: 8006
