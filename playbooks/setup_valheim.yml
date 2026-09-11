@@ -1,0 +1,73 @@
+- name: Setup VM in proxmox for valheim
+  hosts: valheim
+  gather_facts: false
+  roles:
+    - role: gijsentius.homelab.proxmox
+      delegate_to: localhost
+
+- name: Run common tasks
+  hosts: valheim
+  gather_facts: true
+  roles:
+    - gijsentius.homelab.common
+
+- name: Start valheim on VM inside docker container
+  hosts: valheim
+  gather_facts: true
+  tasks:
+    - name: Create snapshot of VM
+      ansible.builtin.include_role:
+        name: gijsentius.homelab.proxmox
+        tasks_from: add_snapshot.yml
+      when: host_snapshot
+
+    - name: Setup docker on newly created VM
+      ansible.builtin.include_role:
+        name: gijsentius.homelab.docker
+
+    - name: Create valheim data directories
+      ansible.builtin.file:
+        path: "/home/{{ lookup('env', 'USER') }}/valheim-data/{{ item }}"
+        state: directory
+        owner: "1000"
+      become: true
+      loop:
+        - config
+        - data
+
+    - name: Start valheim in Docker container
+      community.docker.docker_container:
+        name: valheim
+        image: lloesche/valheim-server:latest
+        capabilities:
+          - sys_nice
+        stop_timeout: 120
+        env:
+          SERVER_NAME: "Gijsentius"
+          WORLD_NAME: "test123"
+          SERVER_PASS: "{{ valheim_server_pass }}"
+          SERVER_PUBLIC: "false"
+          TZ: Europe/Amsterdam
+          STATUS_HTTP: "true"
+          STATUS_HTTP_PORT: "80"
+        volumes:
+          - "/home/{{ lookup('env', 'USER') }}/valheim-data/config:/config"
+          - "/home/{{ lookup('env', 'USER') }}/valheim-data/data:/opt/valheim"
+        ports:
+          - "2456-2457:2456-2457/udp"
+          - "8081:80"
+        restart_policy: "unless-stopped"
+        state: started
+
+    - name: Start watchtower docker container
+      community.docker.docker_container:
+        name: watchtower
+        image: containrrr/watchtower:latest
+        env:
+          TZ: Europe/Amsterdam
+          PUID: '1000'
+          PGID: '1000'
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        restart_policy: "always"
+        state: started

@@ -52,3 +52,7 @@ caddy_servers:
     hosts: [vault.gijsentius.org]
     port: 8080
     protocol: http
+  - server: valheim.gijsentius.org
+    hosts: [valheim.gijsentius.org]
+    port: 8081
+    protocol: http
